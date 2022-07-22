@@ -1,0 +1,113 @@
+$primary: #626c87;
+
+.example-app-wrapper {
+  margin-top: 52px;
+}
+
+.example-app-sidebar {
+  max-width: 300px;
+  position: fixed;
+  background-color: rgb(240, 240, 240);
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  overflow-y: auto;
+}
+
+.example-app-sidebar a {
+  color: initial;
+  display: block;
+  padding: 0.75rem 2rem;
+  &:hover {
+    background-color: white;
+    color: initial;
+  }
+  &.active {
+    background-color: white;
+    color: initial;
+  }
+
+  &:hover,
+  &:focus {
+    text-decoration: none;
+  }
+}
+
+.example-app-sidebar h4 {
+  font-family: system-ui;
+  font-size: 0.75rem;
+  margin-top: 2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.75rem 2rem;
+}
+
+.example-app-main {
+  padding-left: 300px;
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  overflow-y: auto;
+}
+
+.example-app-settings {
+  position: fixed;
+  top: 52px;
+  right: 0;
+  z-index: 100;
+  display: none;
+  height: calc(100% - 52px);
+  background-color: #282a36;
+  padding: 2rem;
+  &.active {
+    display: block;
+  }
+}
+
+.example-app-settings pre {
+  background-color: transparent;
+  border: none;
+  color: #f8f8f2;
+  border-radius: 4px;
+  padding: 1rem;
+  font-family: "Roboto Mono", "SF Mono", Consolas, Menlo, Monaco, monospace;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.example-app-template-scroller {
+  max-width: calc(100vw - 300px);
+  max-height: calc(100vh - 52px);
+  overflow-x: scroll;
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+}
+
+.example-app-template-scroller-item {
+  position: relative;
+  flex: 0 0 600px;
+  border: 1px solid #ccc;
+  white-space: nowrap;
+  overflow-y: auto;
+}
+
+.example-app-template-scroller-item:before {
+  content: attr(data-title);
+  color: initial;
+  background-color: lightblue;
+  padding: 0.25rem 1rem;
+  border-radius: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  display: flex;
+  place-items: center;
+  max-width: 200px;
+  font-size: 0.75rem;
+  position: absolute;
+  top: 1rem;
+  z-index: 10;
+  left: calc(50% - 100px);
+}

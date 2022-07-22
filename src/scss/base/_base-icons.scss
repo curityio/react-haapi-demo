@@ -1,0 +1,203 @@
+/// This file is for extending the icon used from Ionicons
+
+// Since Bankid doesn't exist in Ionicons we make our own
+.ionbaseicon {
+  display: inline-block;
+  font-family: Ionicons;
+  speak: none;
+  font-style: normal;
+  font-weight: 400;
+  font-variant: normal;
+  text-transform: none;
+  text-rendering: auto;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+}
+
+.ion-bankid {
+  background-image: url("#{$imagePath}bankid-logo-white.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 50%;
+
+  &:before {
+    @extend .visuallyhidden;
+    @extend .ionbaseicon;
+  }
+}
+
+.ion-google {
+  background-image: url("#{$imagePath}icon-google-white.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 45%;
+
+  &:before {
+    @extend .visuallyhidden;
+    @extend .ionbaseicon;
+  }
+}
+
+.ion-aws {
+  background-image: url("#{$imagePath}aws-logo-white.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 50%;
+
+  &:before {
+    @extend .visuallyhidden;
+    @extend .ionbaseicon;
+  }
+}
+
+.ion-salesforce {
+  background-image: url("#{$imagePath}salesforce-logo-white.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 50%;
+
+  &:before {
+    @extend .visuallyhidden;
+    @extend .ionbaseicon;
+  }
+}
+
+.ion-freja {
+  background-image: url("#{$imagePath}freja-logo-white.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 50%;
+
+  &:before {
+    @extend .visuallyhidden;
+    @extend .ionbaseicon;
+  }
+}
+
+.ion-cgi {
+  background-image: url("#{$imagePath}cgi-logo-white.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 50%;
+
+  &:before {
+    @extend .visuallyhidden;
+    @extend .ionbaseicon;
+  }
+}
+
+.ion-slack {
+  background-image: url("#{$imagePath}slack-logo-white.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 50%;
+
+  &:before {
+    @extend .visuallyhidden;
+    @extend .ionbaseicon;
+  }
+}
+
+.ion-bitbucket {
+  background-image: url("#{$imagePath}bitbucket-logo-white.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 50%;
+
+  &:before {
+    @extend .visuallyhidden;
+    @extend .ionbaseicon;
+  }
+}
+
+.ion-box {
+  background-image: url("#{$imagePath}box-logo-white.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 50%;
+
+  &:before {
+    @extend .visuallyhidden;
+    @extend .ionbaseicon;
+  }
+}
+
+.ion-signicat {
+  //background-image: url("#{$imagePath}signicat-logo-white.svg");
+  //background-repeat: no-repeat;
+  //background-position: center center;
+  //background-size: 50%;
+  //
+  //&:before {
+  //  @extend .visuallyhidden;
+  //  @extend .ionbaseicon;
+  //}
+}
+
+.ion-stackexchange {
+  background-image: url("#{$imagePath}stackexchange-logo-white.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 50%;
+
+  &:before {
+    @extend .visuallyhidden;
+    @extend .ionbaseicon;
+  }
+}
+
+.ion-criipto {
+  background-image: url("#{$imagePath}criipto-logo-white.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 50%;
+
+  &:before {
+    @extend .visuallyhidden;
+    @extend .ionbaseicon;
+  }
+}
+
+.ion-bitbucket {
+  background-image: url("#{$imagePath}bitbucket-logo-white.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 50%;
+
+  &:before {
+    @extend .visuallyhidden;
+    @extend .ionbaseicon;
+  }
+}
+
+.ion-signicat {
+  background-image: url("#{$imagePath}signicat-logo-white.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 50%;
+
+  &:before {
+    @extend .visuallyhidden;
+    @extend .ionbaseicon;
+  }
+}
+
+.ion-openid {
+  background: url("#{$imagePath}openid-logo-white.svg") 50% 50% no-repeat;
+  background-size: 50%;
+
+  &:before {
+    @extend .visuallyhidden;
+    @extend .ionbaseicon;
+  }
+}
+
+.ion-duo {
+  background: url("#{$imagePath}duo-logo-white.svg") 50% 50% no-repeat;
+  background-size: 60%;
+
+  &:before {
+    @extend .visuallyhidden;
+    @extend .ionbaseicon;
+  }
+}

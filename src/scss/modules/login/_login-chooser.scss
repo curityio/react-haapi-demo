@@ -1,0 +1,90 @@
+/*
+ * Copyright (C) 2016 Curity AB. All rights reserved.
+ *
+ * The contents of this file are the property of Curity AB.
+ * You may not copy or use this file, in either source code
+ * or executable form, except in compliance with terms
+ * set by Curity AB.
+ *
+ * For further information, please contact Curity AB.
+ */
+
+.login-chooser {
+	display: flex;
+	justify-content: space-between;
+	align-content: center;
+	flex-direction: column;
+	margin-top: 1rem;
+}
+
+.login-chooser-item,
+a.login-chooser-item {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	box-shadow: 0 1px 1px -1px #ddd;
+
+	&.login-chooser-item-selected {
+		pointer-events: none;
+	}
+
+	body.body-dark .form-transparent & {
+		box-shadow: none;
+	}
+
+
+	&:active,
+	&:focus,
+	&:hover {
+		color: white;
+		text-decoration: none;
+		background-color: lighten($primary, 15%);
+
+		.icon {
+			background-color: lighten($primary, 5%);
+			color: white;
+
+		}
+		p {
+			color: white;
+		}
+	}
+
+	&:focus {
+		outline: none;
+		border-color: rgba(lighten($primary, 20%), 0.5);
+		box-shadow: 0 0 0 3px rgba(lighten($primary, 20%), 0.5);
+	}
+
+}
+
+.login-chooser-item .icon {
+	width: 100px;
+	height: 80px;
+	font-size: 3rem;
+	color: $primary;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex: 1 0 30%;
+
+
+	@media #{$breakpoint-md} {
+		font-size: 4rem;
+		width: 100px;
+		height: 90px;
+	}
+}
+
+.login-chooser-item p {
+	flex: 1 0 70%;
+	margin: 0;
+	text-align: left;
+	font-size: .9rem;
+	padding: 1rem;
+
+	@media #{$breakpoint-sm} {
+		font-size: 1.15rem;
+	}
+}

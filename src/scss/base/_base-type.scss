@@ -1,0 +1,163 @@
+/*
+ * Copyright (C) 2016 Curity AB. All rights reserved.
+ *
+ * The contents of this file are the property of Curity AB.
+ * You may not copy or use this file, in either source code
+ * or executable form, except in compliance with terms
+ * set by Curity AB.
+ *
+ * For further information, please contact Curity AB.
+ */
+
+strong, b {
+    font-weight: normal;
+    font-family: 'Roboto-Medium';
+    color: $strong-color;
+}
+
+i, em, blockquote {
+    font-style: italic;
+}
+
+
+html {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    background: rgb(255,255,255);
+    overflow-y: scroll;
+}
+
+/*
+SELECTIONS
+--------------------------------------------- */
+
+::-moz-selection {
+    background: #2F4461;
+    color: rgb(255,255,255);
+    text-shadow: none;
+}
+
+::selection {
+    background: #2F4461;
+    color: rgb(255,255,255);
+    text-shadow: none;
+}
+
+::selection:window-inactive {
+    background: #2F4461;
+    color: rgb(50,50,50);
+}
+
+img::selection {
+    background: transparent;
+}
+
+img::-moz-selection {
+    background: transparent;
+}
+
+/*
+BASE TYPOGRAPHY
+--------------------------------------------- */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    text-rendering: optimizeLegibility;
+    font-weight: normal;
+    font-family: "Roboto-Regular";
+    color: $heading-color;
+}
+
+h1 {
+    font-size: 2rem;
+    @media #{$breakpoint-lg} {
+        font-size: 3rem;
+    }
+}
+
+h2 {
+    font-size: 1.5rem;
+    @media #{$breakpoint-lg} {
+        font-size: 1.75rem;
+    }
+}
+
+p {
+    font-weight: 300;
+    font-size: .95rem;
+    line-height: 1.5;
+    color: $paragraph-color;
+}
+
+abbr {
+    text-transform: lowercase;
+    font-variant: small-caps;
+    letter-spacing: 0.1em;
+    cursor: help;
+}
+
+sub, sup {
+    vertical-align: baseline;
+    position: relative;
+    font-size: 65%;
+    line-height: 0;
+}
+
+sub {
+    bottom: -0.25em;
+}
+
+sup {
+    top: -0.5em;
+}
+
+blockquote {
+    margin: 2.5em 0 2.5em 1.80203em;
+    color: rgb(90,90,90);
+    position: relative;
+    font-style: normal;
+}
+
+ul, ol {
+    margin-left: 0;
+}
+
+ul {
+    list-style-type: disc;
+    color: $paragraph-color;
+}
+
+ol {
+    list-style-type: lower-roman;
+}
+
+.hidden {
+    display: none;
+}
+
+pre {
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    overflow-x: auto;
+    text-align: left;
+    border-radius: 2px;
+    background-color: #fafafa;
+    border: 1px solid #eee;
+    padding: .5rem 1rem;
+    font-size: 1rem;
+    font-family: "SF Mono", "Monaco", "Inconsolata", "Fira Mono", "Droid Sans Mono", "Source Code Pro", monospace;
+}
+
+pre code {
+    white-space: pre-wrap;
+    overflow-x: auto;
+    word-break: break-all;
+}

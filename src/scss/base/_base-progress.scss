@@ -1,0 +1,109 @@
+/*
+ * Copyright (C) 2016 Curity AB. All rights reserved.
+ *
+ * The contents of this file are the property of Curity AB.
+ * You may not copy or use this file, in either source code
+ * or executable form, except in compliance with terms
+ * set by Curity AB.
+ *
+ * For further information, please contact Curity AB.
+ */
+
+/*-------------------------------------------------------------------
+Progress bars
+-------------------------------------------------------------------*/
+
+$progress-bar-height: 10px;
+$progress-bar-thin-height: 6px;
+
+div.progress {
+	height: $progress-bar-height;
+	overflow: hidden;
+	background-color: $grey-light-25;
+	border-radius: 0;
+}
+
+.progress-bar {
+	height: 100%;
+	font-size: 12px;
+	line-height: $progress-bar-height;
+	color: #fff;
+	text-align: center;
+	float: left;
+	width: 0%;
+	-webkit-transition: width .6s ease;
+	-o-transition: width .6s ease;
+	transition: width .6s ease;
+}
+
+.progress.progress-thin {
+	height: $progress-bar-thin-height;
+}
+
+div.progress .progress-success {
+	@extend .progress-bar;
+
+	background-color: $call-to-action-success;
+}
+
+div.progress .progress-info {
+	@extend .progress-bar;
+
+	background-color: darken($call-to-action-info, 20%);
+}
+
+div.progress .progress-warning {
+	@extend .progress-bar;
+
+	background-color: darken($call-to-action-warning, 0%);
+}
+
+div.progress .progress-danger {
+	@extend .progress-bar;
+
+	background-color: $call-to-action-danger;
+}
+
+div.progress .progress-level-10 {
+	width: 10%;
+}
+
+div.progress .progress-level-20 {
+	width: 20%;
+}
+
+div.progress .progress-level-20 {
+	width: 20%;
+}
+
+div.progress .progress-level-30 {
+	width: 30%;
+}
+
+div.progress .progress-level-40 {
+	width: 40%;
+}
+
+div.progress .progress-level-50 {
+	width: 50%;
+}
+
+div.progress .progress-level-60 {
+	width: 60%;
+}
+
+div.progress .progress-level-70 {
+	width: 70%;
+}
+
+div.progress .progress-level-80 {
+	width: 80%;
+}
+
+div.progress .progress-level-90 {
+	width: 90%;
+}
+
+div.progress .progress-level-100 {
+	width: 100%;
+}

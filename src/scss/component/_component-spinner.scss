@@ -1,0 +1,63 @@
+/*
+ * Copyright (C) 2016 Curity AB. All rights reserved.
+ *
+ * The contents of this file are the property of Curity AB.
+ * You may not copy or use this file, in either source code
+ * or executable form, except in compliance with terms
+ * set by Curity AB.
+ *
+ * For further information, please contact Curity AB.
+ */
+
+$spinner-margin: 2rem auto !default;
+$size: 30px !default;
+$spinner-color: $primary !default;
+
+/*
+ *  Usage:
+ *
+  <div class="waiting-spinner">
+      <div class="waiting-spinner-child waiting-spinner-bounce1"></div>
+      <div class="waiting-spinner-child waiting-spinner-bounce2"></div>
+      <div class="waiting-spinner-child waiting-spinner-bounce3"></div>
+  </div>
+ *
+ */
+
+.waiting-spinner {
+  $animationDuration: 1.4s;
+  $delayRange: 0.32s;
+
+  margin: $spinner-margin;
+  width: $size * 2;
+  text-align: center;
+
+  .waiting-spinner-child {
+    width: $size / 2;
+    height: $size / 2;
+    background-color: $spinner-color;
+    border-radius: 100%;
+    display: inline-block;
+    animation: waiting-spinner $animationDuration ease-in-out 0s infinite both;
+  }
+
+  .waiting-spinner-bounce1 {
+    animation-delay: -$delayRange;
+  }
+
+  .waiting-spinner-bounce2 {
+    animation-delay: -$delayRange / 2;
+  }
+}
+
+@keyframes waiting-spinner {
+  0%,
+  80%,
+  100% {
+    transform: scale(0);
+  }
+
+  40% {
+    transform: scale(1);
+  }
+}

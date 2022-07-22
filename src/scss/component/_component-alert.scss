@@ -1,0 +1,168 @@
+/*
+ * Copyright (C) 2016 Curity AB. All rights reserved.
+ *
+ * The contents of this file are the property of Curity AB.
+ * You may not copy or use this file, in either source code
+ * or executable form, except in compliance with terms
+ * set by Curity AB.
+ *
+ * For further information, please contact Curity AB.
+ */
+
+/*-------------------------------------------------------------------
+Alerts
+-------------------------------------------------------------------*/
+.alert-wrapper {
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+	padding-left: 1rem;
+	padding-right: 1rem;
+
+	@media #{$breakpoint-sm} {
+		padding-left: 2.5rem;
+		padding-right: 2.5rem;
+	}
+}
+
+.alert {
+	margin-bottom: 1rem;
+	border-radius: 2px;
+	color: $grey;
+	font-size: .8rem;
+	border: 1px solid #ccc;
+	position: relative;
+	padding: 1rem 1rem 1rem 60px;
+}
+
+.alert:before {
+	width: 30px;
+	height: calc(100%);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-family: 'Ionicons';
+	font-size: 1.5rem;
+	color: white;
+	position: absolute;
+	padding: 1.5rem;
+	line-height: 0;
+	left: 0;
+	top: 0;
+}
+
+.alert-warning {
+	color: darken($call-to-action-warning, 0%);
+
+	&:before {
+		background-color: $call-to-action-warning;
+		content: '\f3bc';
+	}
+}
+
+.alert-danger {
+	color: darken($call-to-action-danger, 10%);
+
+	&:before {
+		background-color: $call-to-action-danger;
+		content: '\f3bc';
+	}
+}
+
+.alert-success {
+	color: darken($call-to-action-success, 10%);
+
+	&:before {
+		background-color: $call-to-action-success;
+		content: '\f120';
+	}
+}
+
+.alert-info {
+	color: darken($call-to-action-info, 25%);
+
+	&:before {
+		background-color: darken($call-to-action-info, 30%);
+		content: '\f149';
+	}
+}
+
+// Dark skin
+.body-dark .form-transparent .alert {
+	color: white;
+
+	&.alert-info {
+		border: 1px solid darken($call-to-action-info, 30%);
+	}
+
+	&.alert-success {
+		border: 1px solid $call-to-action-success;
+	}
+
+	&.alert-danger {
+		border: 1px solid $call-to-action-danger;
+	}
+
+	&.alert-warning {
+		border: 1px solid $call-to-action-warning;
+	}
+}
+
+// Error labels/text colors
+.is-error.is-error-danger {
+	color: $call-to-action-danger;
+}
+
+.field-light.is-error.is-error-danger {
+	border: 1px solid $call-to-action-danger;
+}
+
+.is-error.is-error-warning {
+	color: darken($call-to-action-warning, 50%);
+}
+
+.field-light.is-error.is-error-warning {
+	border: 1px solid darken($call-to-action-warning, 40%);
+}
+
+.is-error.is-error-success {
+	color: $call-to-action-success;
+}
+
+.field-light.is-error.is-error-success {
+	border: 1px solid $call-to-action-success;
+}
+
+.is-error.is-error-info {
+	color: darken($call-to-action-info, 30%);
+}
+
+.field-light.is-error.is-error-info {
+	border: 1px solid darken($call-to-action-info, 30%);
+}
+
+/*-------------------------------------------------------------------
+Badges use with the <sup></sup>
+-------------------------------------------------------------------*/
+
+.badge {
+	padding: 3px 6px;
+	color: white;
+}
+
+.badge-warning {
+	background-color: $call-to-action-warning;
+}
+
+.badge-danger {
+	background-color: $call-to-action-danger;
+}
+
+.badge-success {
+	background-color: $call-to-action-success;
+}
+
+p .badge {
+	top: 0;
+	margin-left: 4px;
+	margin-right: 4px;
+}

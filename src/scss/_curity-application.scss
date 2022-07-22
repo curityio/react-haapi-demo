@@ -1,0 +1,56 @@
+/*
+ * Copyright (C) 2016 Curity AB. All rights reserved.
+ *
+ * The contents of this file are the property of Curity AB.
+ * You may not copy or use this file, in either source code
+ * or executable form, except in compliance with terms
+ * set by Curity AB.
+ *
+ * For further information, please contact Curity AB.
+ */
+
+/*-------------------------------------------------------------------
+Base
+-------------------------------------------------------------------*/
+@import "base/base-base";
+@import "base/base-type";
+@import "base/base-links";
+@import "base/base-icons";
+@import "base/base-forms";
+@import "base/base-tables";
+@import "base/base-buttons";
+@import "base/base-progress";
+@import "base/base-utility";
+
+/*-------------------------------------------------------------------
+Components
+-------------------------------------------------------------------*/
+@import "component/component-alert";
+@import "component/component-well";
+@import "component/component-spinner";
+
+/*-------------------------------------------------------------------
+Modules
+-------------------------------------------------------------------*/
+// Login
+@import "modules/login/login-base";
+@import "modules/login/login-well";
+@import "modules/login/login-header";
+@import "modules/login/login-wizard";
+@import "modules/login/login-iframe";
+@import "modules/login/login-info";
+@import "modules/login/login-chooser";
+@import "modules/login/login-waiting";
+@import "modules/login/login-skin";
+
+// Admin
+@import "modules/admin/admin-users";
+
+// Self service
+@import "modules/selfservice/self-service";
+
+// Device flow
+@import "modules/deviceflow/deviceflow";
+
+// Consent
+@import "modules/consent/module-consent";

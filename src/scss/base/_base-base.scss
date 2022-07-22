@@ -1,0 +1,54 @@
+/*
+ * Copyright (C) 2016 Curity AB. All rights reserved.
+ *
+ * The contents of this file are the property of Curity AB.
+ * You may not copy or use this file, in either source code
+ * or executable form, except in compliance with terms
+ * set by Curity AB.
+ *
+ * For further information, please contact Curity AB.
+ */
+
+* {
+  &,
+  &:before,
+  &:after {
+    box-sizing: border-box;
+  }
+}
+
+html {
+  height: 100%;
+}
+
+html,
+body,
+#app,
+#app > div {
+  height: 100%;
+}
+
+.body {
+  min-height: 100vh;
+  position: relative;
+}
+
+body {
+  min-height: 100%;
+  position: relative;
+  font-size: 100%;
+  font-family: "Roboto-Regular", sans-serif;
+  font-weight: normal;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  max-width: 74em;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin: 0 auto;
+  @media #{$breakpoint-md} {
+    padding-left: 1.25em;
+    padding-right: 1.25em;
+  }
+}

@@ -1,0 +1,31 @@
+/*
+ * Copyright (C) 2016 Curity AB. All rights reserved.
+ *
+ * The contents of this file are the property of Curity AB.
+ * You may not copy or use this file, in either source code
+ * or executable form, except in compliance with terms
+ * set by Curity AB.
+ *
+ * For further information, please contact Curity AB.
+ */
+
+/* Links */
+a {
+    color: $link-color;
+    text-decoration:none;
+}
+
+a:not(.button) {
+    &:hover,
+    &:focus {
+        text-decoration: underline;
+        color: $link-color-hover;
+    }
+}
+
+/* Improves readability when focused and also mouse hovered in all browsers
+people.opera.com/patrickl/experiments/keyboard/test */
+a:hover,
+a:active {
+    outline: 0;
+}

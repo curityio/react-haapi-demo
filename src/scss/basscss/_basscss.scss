@@ -1,0 +1,46 @@
+/*
+ * Copyright (C) 2017 Curity AB. All rights reserved.
+ *
+ * The contents of this file are the property of Curity AB.
+ * You may not copy or use this file, in either source code
+ * or executable form, except in compliance with terms
+ * set by Curity AB.
+ *
+ * For further information, please contact Curity AB.
+ */
+
+
+@import "../../../node_modules/basscss-sass/scss/basscss";
+@import "../../../node_modules/basscss-sass/scss/forms";
+
+// there is a bug in btn.scss, so this is moved out of the bower repo
+@import "../../../node_modules/basscss-sass/scss/btn";
+//@import 'btn.scss';
+
+@import "../../../node_modules/basscss-sass/scss/btn-primary";
+@import "../../../node_modules/basscss-sass/scss/btn-outline";
+@import "../../../node_modules/basscss-sass/scss/type-scale";
+@import "../../../node_modules/basscss-sass/scss/typography";
+@import "../../../node_modules/basscss-sass/scss/layout";
+@import "../../../node_modules/basscss-sass/scss/align";
+@import "../../../node_modules/basscss-sass/scss/grid";
+@import "../../../node_modules/basscss-sass/scss/flexbox";
+@import "../../../node_modules/basscss-sass/scss/border";
+@import "../../../node_modules/basscss-sass/scss/colors";
+@import "../../../node_modules/basscss-sass/scss/background-colors";
+@import "../../../node_modules/basscss-sass/scss/background-images";
+@import "../../../node_modules/basscss-sass/scss/border-colors";
+@import "../../../node_modules/basscss-sass/scss/highlight";
+@import "../../../node_modules/basscss-sass/scss/highlight-dark";
+@import "../../../node_modules/basscss-sass/scss/input-range";
+@import "../../../node_modules/basscss-sass/scss/progress";
+@import "../../../node_modules/basscss-sass/scss/responsive-margin";
+@import "../../../node_modules/basscss-sass/scss/responsive-padding";
+@import "../../../node_modules/basscss-sass/scss/media-object";
+@import "../../../node_modules/basscss-sass/scss/hide";
+@import "../../../node_modules/basscss-sass/scss/all";
+@import "../../../node_modules/basscss-sass/scss/darken";
+@import "../../../node_modules/basscss-sass/scss/lighten";
+@import "../../../node_modules/basscss-sass/scss/margin";
+@import "../../../node_modules/basscss-sass/scss/padding";
+@import "../../../node_modules/basscss-sass/scss/position";

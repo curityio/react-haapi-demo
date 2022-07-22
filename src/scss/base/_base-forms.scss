@@ -1,0 +1,261 @@
+/*
+ * Copyright (C) 2016 Curity AB. All rights reserved.
+ *
+ * The contents of this file are the property of Curity AB.
+ * You may not copy or use this file, in either source code
+ * or executable form, except in compliance with terms
+ * set by Curity AB.
+ *
+ * For further information, please contact Curity AB.
+ */
+
+/*-------------------------------------------------------------------
+Base fields
+-------------------------------------------------------------------*/
+// The .field-light class will use the standard basscss .field class.
+
+.field {
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgba(0, 0, 0, 0.125);
+  border-radius: 3px;
+}
+
+.field:focus,
+.field.is-focused {
+  outline: none;
+  border-color: #0074d9;
+  box-shadow: 0 0 0 1px rgba(lighten($primary, 20%), 0.5);
+}
+
+.field:disabled,
+.field.is-disabled {
+  background-color: rgba(0, 0, 0, 0.125);
+  opacity: 0.5;
+}
+
+.field[readonly]:not(select),
+.field.is-read-only {
+  background-color: rgba(0, 0, 0, 0.125);
+}
+
+.field[readonly]:not(select),
+.field.is-read-only {
+  background-color: rgba(0, 0, 0, 0.125);
+}
+
+.field.is-success {
+  border-color: #2ecc40;
+}
+
+.field.is-success:focus,
+.field.is-success.is-focused {
+  box-shadow: 0 0 0 1px rgba(46, 204, 64, 0.5);
+}
+
+.field.is-warning {
+  border-color: #ffdc00;
+}
+
+.field.is-warning:focus,
+.field.is-warning.is-focused {
+  box-shadow: 0 0 0 1px rgba(255, 220, 0, 0.5);
+}
+
+.field-light {
+  @extend .field;
+}
+
+// Full width fields
+.full-width {
+  width: 100%;
+}
+
+/*-------------------------------------------------------------------
+Focus color
+-------------------------------------------------------------------*/
+.field-light:focus {
+  border-color: lighten($primary, 40%);
+}
+
+/*-------------------------------------------------------------------
+Error responses
+-------------------------------------------------------------------*/
+label.is-error {
+  color: $call-to-action-danger;
+}
+
+// Label
+label {
+  color: #666;
+  line-height: 1;
+  font-size: 0.85rem;
+  font-family: "Roboto-Regular";
+
+  @media #{$breakpoint-md} {
+    line-height: 2;
+    font-size: 0.95rem;
+  }
+}
+
+// Submit buttons
+button[type="submit"].button,
+input[type="submit"].button {
+  margin-top: 1rem;
+}
+
+// Form inout types
+input[type="text"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="email"],
+input[type="month"],
+input[type="number"],
+input[type="password"],
+input[type="search"],
+input[type="tel"],
+input[type="time"],
+input[type="url"],
+input[type="week"] {
+  height: $form-field-height;
+  padding: $form-field-padding;
+  font-size: $form-field-font-size;
+  color: $form-field-color;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+
+  &:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: lighten($primary, 40%);
+    outline: 0;
+  }
+}
+
+// Form textarea
+textarea {
+  color: #666;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+
+  &:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: $primary;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba($primary, 0.25);
+  }
+}
+
+/*-------------------------------------------------------------------
+Nicer looking select boxes
+-------------------------------------------------------------------*/
+select {
+  height: 38px;
+  padding: 6px 10px; /* The 6px vertically centers text on FF, ignored by Webkit */
+  background-color: #fff;
+  border: 1px solid #d1d1d1;
+  border-radius: 2px;
+  box-shadow: none;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+/*-------------------------------------------------------------------
+Fieldset
+-------------------------------------------------------------------*/
+fieldset {
+  padding: 2rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 2rem;
+}
+
+/*-------------------------------------------------------------------
+Password revealer
+-------------------------------------------------------------------*/
+.form-password-reveal-form {
+  position: relative;
+
+  input {
+    padding-right: 42px;
+  }
+}
+
+.form-password-reveal-form-icon {
+  position: absolute;
+  top: 2.25rem;
+  right: 0.5rem;
+  opacity: 0.3;
+  background-image: url("#{$imagePath}eye.svg");
+  background-repeat: no-repeat;
+  background-size: 100%;
+  display: inline-block;
+  vertical-align: middle;
+  transition: opacity 200ms ease;
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+  background-size: 18px 18px;
+
+  @media #{$breakpoint-md} {
+    top: 2.5rem;
+  }
+
+  &.active {
+    opacity: 1;
+  }
+}
+
+// Placeholders
+::placeholder {
+  color: $form-field-placeholder-color;
+}
+
+// Form field
+.form-field {
+  position: relative;
+}
+
+// Form field readonly
+.field-light[readonly]:not(select),
+.field.is-read-only,
+.field[readonly]:not(select),
+.is-read-only.field-light {
+  background-color: transparent;
+  border-color: transparent;
+  text-align: center;
+  padding: 0;
+  @extend h1;
+}
+
+// Form field icons
+.form-field-icon {
+  position: absolute;
+  color: $form-field-icon-color;
+  top: 1.75rem;
+  left: 1rem;
+  font-size: 1.5rem;
+  transition: color 300ms;
+
+  @media #{$breakpoint-md} {
+    top: 2rem;
+  }
+}
+
+.form-field input:focus ~ .form-field-icon {
+  color: $form-field-icon-focus-color;
+}
+
+// Type
+.well-white h2,
+.well-white h3,
+.well-white h4,
+.well-white p {
+  color: initial;
+}
+
+// Fieldset Legend
+legend {
+  body.body-dark .form-transparent & {
+    color: white;
+  }
+}

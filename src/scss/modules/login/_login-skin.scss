@@ -1,0 +1,63 @@
+/*
+ * Copyright (C) 2016 Curity AB. All rights reserved.
+ *
+ * The contents of this file are the property of Curity AB.
+ * You may not copy or use this file, in either source code
+ * or executable form, except in compliance with terms
+ * set by Curity AB.
+ *
+ * For further information, please contact Curity AB.
+ */
+
+// Login page background
+.body-light {
+  background-image: none;
+  background-color: $background-color;
+}
+
+.body-dark {
+  background-image: none;
+  background-color: $background-color-dark;
+}
+
+// // Body dark login actions
+// .body-dark .form-transparent .login-actions a {
+//   color: $login-action-links-color-transparent-dark;
+// }
+
+// Body dark well typography
+.body-dark .form-transparent h1,
+.body-dark .form-transparent h2,
+.body-dark .form-transparent h3,
+.body-dark .form-transparent h4,
+.body-dark .form-transparent label,
+.body-dark .form-transparent p {
+  color: $type-color-transparent-dark;
+}
+
+// Body dark form field icon color
+.body-dark .form-transparent .form-field-icon {
+  color: $form-field-icon-color-transparent-dark;
+}
+
+// Body dark form transparent. Form field action color
+.body-dark .form-transparent .form-field input:focus,
+.body-dark .form-transparent .form-field input:valid,
+.body-dark .form-transparent .form-field textarea:focus,
+.body-dark .form-transparent .form-field textarea:valid {
+  color: $form-field-focus-color-transparent-dark;
+}
+
+// Body dark form transparent. Login symbol circle
+.body-light .form-transparent .login-symbol-circle {
+  background-color: white;
+}
+
+// Powered by Curity
+.body-dark .form-transparent .login-powered-by small {
+  color: white;
+}
+
+.body-dark .form-transparent .login-powered-by-logo {
+  background-image: url("#{$imagePath}curity-logo-white.svg");
+}
