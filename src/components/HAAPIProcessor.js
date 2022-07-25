@@ -9,7 +9,7 @@ import RedirectStep from "./RedirectStep";
 import {prettyPrintJson} from "pretty-print-json";
 
 export default function HAAPIProcessor(props) {
-    const { haapiFetch, setUser } = props
+    const { haapiFetch, setTokens } = props
     const [ state, setState ] = useState({ step: null, type: null, haapiResponse: null, problem: null, isLoading: false })
     const [ followRedirects, setFollowRedirects ] = useState(true)
 
@@ -26,15 +26,141 @@ export default function HAAPIProcessor(props) {
                 const tokens = await tokensResponse.json()
                 console.log('Setting tokens')
                 console.log(tokens)
-                setUser(tokens)
+                setTokens(tokens)
             }
 
             fetchTokens()
         }
-    }, [setUser, state])
+    }, [setTokens, state])
 
-console.log('State in processor is: ')
-console.log(state)
+    const processAuthenticationStep = (haapiResponse, followRedirect) => {
+        const view = haapiResponse.metadata.viewName
+
+        switch (view) {
+            case 'authenticator/html-form/forgot-account-id/get':
+            case 'authenticator/html-form/reset-password/get':
+            case 'authenticator/username/authenticate/get':
+            case 'authenticator/html-form/authenticate/get':
+            case 'authenticator/html-form/create-account/get':
+                return <UsernamePassword
+                    haapiResponse={haapiResponse}
+                    submitForm={(formState, url, method) => submitForm(formState, url, method, followRedirect)}
+                    isLoading={state.isLoading}
+                    clickLink={(url) => clickLink(url, followRedirect)}
+                    inputProblem={state.inputProblem}
+                />
+            case 'views/select-authenticator/index':
+                return <Selector
+                    actions={haapiResponse.actions}
+                    submitForm={(url, method) => submitForm( null, url, method, followRedirect)}
+                />
+            case 'authenticator/html-form/reset-password/post':
+            case 'authenticator/html-form/forgot-account-id/post':
+            case 'authenticator/html-form/create-account/post':
+                return <UsernamePasswordContinue
+                    haapiResponse={haapiResponse}
+                    isLoading={state.isLoading}
+                    submitForm={(url, method) => submitForm(null, url, method, followRedirect)}
+                />
+            default:
+                setState({ step: 'unknownStep', type: 'Authentication Step', haapiResponse: haapiResponse, problem: null, isLoading: false })
+        }
+    }
+
+    const startAuthorization = async (followRedirect) => {
+        setState({ step: 'loading', type: null, haapiResponse: null, problem: null, isLoading: true })
+
+        const codeVerifier = generateRandomString(64)
+        setState({
+            ...state,
+            codeVerifier
+        })
+        const codeChallenge = await generateCodeChallenge(codeVerifier)
+
+        const haapiResponse = await callHaapi(
+            `https://localhost:8443/oauth/v2/oauth-authorize?scope=openid&client_id=react-client&response_type=code&code_challenge_method=S256&code_challenge=${codeChallenge}&redirect_uri=http://localhost:3000/`
+        )
+
+        await processHaapiResult(haapiResponse, codeVerifier, followRedirect)
+    }
+
+    const submitForm = async (formState, url, method, followRedirect) => {
+        setIsLoading()
+        const response = await callHaapi(
+            url,
+            method,
+            formState
+        )
+
+        await processHaapiResult(response, state.codeVerifier, followRedirect)
+    }
+
+    const processHaapiResult = async (haapiResponse, codeVerifier, followRedirect) => {
+        switch (haapiResponse.type) {
+            case 'redirection-step':
+                if (followRedirect) {
+                    return await processRedirect(haapiResponse, codeVerifier, followRedirect)
+                } else {
+                    setState({ step: 'show-redirect-step', haapiResponse, problem: null, isLoading: false, codeVerifier })
+                }
+                break
+            case 'authentication-step':
+                setState({ step: 'authentication-step', haapiResponse, problem: null, isLoading: false, codeVerifier })
+                break
+            case 'registration-step':
+                setState({ step: 'registration-step', haapiResponse, problem: null, isLoading: false, codeVerifier })
+                break
+            case 'https://curity.se/problems/incorrect-credentials':
+                setState({ step: state.haapiResponse.type, haapiResponse: state.haapiResponse, problem: haapiResponse, isLoading: false, codeVerifier })
+                break
+            case 'oauth-authorization-response':
+                setState({ step: 'authorization-complete', haapiResponse, isLoading: false, codeVerifier })
+                break
+            case 'https://curity.se/problems/invalid-input':
+                setState({ step: state.haapiResponse.type, haapiResponse: state.haapiResponse, inputProblem: haapiResponse, isLoading: false, codeVerifier })
+                break
+            default:
+                setState({ step: 'unknownStep', type: 'step type', haapiResponse: haapiResponse, problem: null, isLoading: false })
+        }
+    }
+
+    const clickLink = async (url, followRedirect) => {
+        const response = await callHaapi(
+            url,
+            "GET",
+            null
+        )
+
+        await processHaapiResult(response, state.codeVerifier, followRedirect)
+    }
+
+    const processRedirect = async (haapiResult, codeVerifier, followRedirect) => {
+        const action = haapiResult.actions[0]
+
+        if (action.template === 'form' && action.kind === 'redirect') {
+            const response = await callHaapi(
+                action.model.href,
+                action.model.method,
+                getRedirectBody(action.model.fields)
+            )
+
+            return await processHaapiResult(response, codeVerifier, followRedirect)
+        }
+
+        setState({ step: 'unknownStep', type: 'Redirect Step', haapiResponse: haapiResult, problem: null, isLoading: false })
+    }
+
+    const callHaapi = async (url, method = 'GET', body = null) => {
+        const init = { method }
+        if (body) {
+            init.body = body
+        }
+
+        const response = await haapiFetch(url, init)
+
+        return await response.json()
+    }
+
     let stepComponent
 
     switch (state.step) {
@@ -43,13 +169,13 @@ console.log(state)
             break
         case 'authentication-step':
         case 'registration-step':
-            stepComponent = processAuthenticationStep(setState, haapiFetch, state.haapiResponse, state, setIsLoading, followRedirects)
+            stepComponent = processAuthenticationStep(state.haapiResponse, followRedirects)
             break
         case 'authorization-complete':
             stepComponent = <div className="loader" />
             break
         case 'continue-redirect-step':
-            processRedirect(setState, haapiFetch, state.haapiResponse, state, state.codeVerifier, followRedirects)
+            processRedirect(state.haapiResponse, state.codeVerifier, followRedirects)
             stepComponent = <div className="loader" />
             break
         case 'show-redirect-step':
@@ -63,7 +189,10 @@ console.log(state)
                 </>
             break
         default:
-            stepComponent = startAuthorizationButton(setState, haapiFetch, state, followRedirects)
+            stepComponent = <>
+                <p>Please log in</p>
+                <StartAuthorization startAuthorization={() => startAuthorization(followRedirects)} />
+            </>
     }
 
     return (<>
@@ -86,110 +215,6 @@ const getTokens = async (code, codeVerifier) => await fetch('https://localhost:8
         mode: 'cors'
     })
 
-const startAuthorization = async (setState, haapiFetch, state, followRedirect) => {
-    setState({ step: 'loading', type: null, haapiResponse: null, problem: null, isLoading: true })
-
-    const codeVerifier = generateRandomString(64)
-    setState({
-        ...state,
-        codeVerifier
-    })
-    const codeChallenge = await generateCodeChallenge(codeVerifier)
-
-    const haapiResponse = await callHaapi(
-        haapiFetch,
-        `https://localhost:8443/oauth/v2/oauth-authorize?scope=openid&client_id=react-client&response_type=code&code_challenge_method=S256&code_challenge=${codeChallenge}&redirect_uri=http://localhost:3000/`
-    )
-
-    await processHaapiResult(setState, haapiFetch, haapiResponse, state, codeVerifier, followRedirect)
-}
-
-const processHaapiResult = async (setState, haapiFetch, haapiResponse, state, codeVerifier, followRedirect) => {
-    switch (haapiResponse.type) {
-        case 'redirection-step':
-            if (followRedirect) {
-                return await processRedirect(setState, haapiFetch, haapiResponse, state, codeVerifier, followRedirect)
-            } else {
-                setState({ step: 'show-redirect-step', haapiResponse, problem: null, isLoading: false, codeVerifier })
-            }
-            break
-        case 'authentication-step':
-            setState({ step: 'authentication-step', haapiResponse, problem: null, isLoading: false, codeVerifier })
-            break
-        case 'registration-step':
-            setState({ step: 'registration-step', haapiResponse, problem: null, isLoading: false, codeVerifier })
-            break
-        case 'https://curity.se/problems/incorrect-credentials':
-            setState({ step: state.haapiResponse.type, haapiResponse: state.haapiResponse, problem: haapiResponse, isLoading: false, codeVerifier })
-            break
-        case 'oauth-authorization-response':
-            setState({ step: 'authorization-complete', haapiResponse, isLoading: false, codeVerifier })
-            break
-        case 'https://curity.se/problems/invalid-input':
-            setState({ step: state.haapiResponse.type, haapiResponse: state.haapiResponse, inputProblem: haapiResponse, isLoading: false, codeVerifier })
-            break
-        default:
-            setState({ step: 'unknownStep', type: 'step type', haapiResponse: haapiResponse, problem: null, isLoading: false })
-    }
-}
-
-const submitForm = async (haapiFetch, setState, formState, url, method, state, setIsLoading, followRedirect) => {
-    setIsLoading()
-    const response = await callHaapi(
-        haapiFetch,
-        url,
-        method,
-        formState
-    )
-
-    await processHaapiResult(setState, haapiFetch, response, state, state.codeVerifier, followRedirect)
-}
-
-const clickLink = async (haapiFetch, setState, url, state, followRedirect) => {
-    const response = await callHaapi(
-        haapiFetch,
-        url,
-        "GET",
-        null
-    )
-
-    await processHaapiResult(setState, haapiFetch, response, state, state.codeVerifier, followRedirect)
-}
-
-const processAuthenticationStep = (setState, haapiFetch, haapiResponse, state, setIsLoading, followRedirect) => {
-    const view = haapiResponse.metadata.viewName
-
-    switch (view) {
-        case 'authenticator/html-form/forgot-account-id/get':
-        case 'authenticator/html-form/reset-password/get':
-        case 'authenticator/username/authenticate/get':
-        case 'authenticator/html-form/authenticate/get':
-        case 'authenticator/html-form/create-account/get':
-            return <UsernamePassword
-                haapiResponse={haapiResponse}
-                submitForm={(formState, url, method) => submitForm(haapiFetch, setState, formState, url, method, state, setIsLoading, followRedirect)}
-                isLoading={state.isLoading}
-                clickLink={(url) => clickLink(haapiFetch, setState, url, state, followRedirect)}
-                inputProblem={state.inputProblem}
-            />
-        case 'views/select-authenticator/index':
-            return <Selector
-                actions={haapiResponse.actions}
-                submitForm={(url, method) => submitForm(haapiFetch, setState, null, url, method, state, setIsLoading, followRedirect)}
-            />
-        case 'authenticator/html-form/reset-password/post':
-        case 'authenticator/html-form/forgot-account-id/post':
-        case 'authenticator/html-form/create-account/post':
-            return <UsernamePasswordContinue
-                haapiResponse={haapiResponse}
-                isLoading={state.isLoading}
-                submitForm={(url, method) => submitForm(haapiFetch, setState, null, url, method, state, setIsLoading, followRedirect)}
-            />
-        default:
-            setState({ step: 'unknownStep', type: 'Authentication Step', haapiResponse: haapiResponse, problem: null, isLoading: false })
-    }
-}
-
 const getRedirectBody = (fields) => {
     if (!fields) {
         return null
@@ -203,38 +228,6 @@ const getRedirectBody = (fields) => {
 
     return body
 }
-const processRedirect = async (setState, haapiFetch, haapiResult, state, codeVerifier, followRedirect) => {
-    const action = haapiResult.actions[0]
-
-    if (action.template === 'form' && action.kind === 'redirect') {
-        const response = await callHaapi(
-            haapiFetch,
-            action.model.href,
-            action.model.method,
-            getRedirectBody(action.model.fields)
-        )
-
-        return await processHaapiResult(setState, haapiFetch, response, state, codeVerifier, followRedirect)
-    }
-
-    setState({ step: 'unknownStep', type: 'Redirect Step', haapiResponse: haapiResult, problem: null, isLoading: false })
-}
-
-const callHaapi = async (haapiFetch, url, method = 'GET', body = null) => {
-    const init = { method }
-    if (body) {
-        init.body = body
-    }
-
-    const response = await haapiFetch(url, init)
-
-    return await response.json()
-}
-
-const startAuthorizationButton = (setState, haapiFetch, state, followRedirect) => <>
-        <p>Please log in</p>
-        <StartAuthorization startAuthorization={() => startAuthorization(setState, haapiFetch, state, followRedirect)} />
-    </>
 
 const generateRandomString = (length) => {
     let text = "";

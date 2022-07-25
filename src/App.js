@@ -6,18 +6,11 @@ import './App.css'
 import '../node_modules/pretty-print-json/dist/pretty-print-json.css'
 
 import {useState} from "react";
-import {createHaapiFetch} from "@curity/identityserver-haapi-web-driver";
 import HAAPIProcessor from "./components/HAAPIProcessor";
+import haapiFetch from "./haapiFetch";
 
 function App() {
-
-  const [user, setUser] = useState(null)
-
-    console.log("Creating/recreatig HAAPIFetch")
-    const haapiFetch = createHaapiFetch({
-        clientId: 'react-client',
-        tokenEndpoint: 'https://localhost:8443/oauth/v2/oauth-token',
-    })
+  const [tokens, setTokens] = useState(null)
 
   return (
     <div className="App">
@@ -25,18 +18,18 @@ function App() {
         <img src="/curity-logo.svg" className="App-logo" alt="logo" />
       </header>
       <main>
-        {user && <>
-          <p>Logged in as { getUser(user) } with token {user.access_token}</p>
+        {tokens && <>
+          <p>Logged in as { getSubject(tokens) } with access token {tokens.access_token}</p>
         </>}
-        {!user && <>
-          <HAAPIProcessor haapiFetch={haapiFetch} setUser={setUser}/>
+        {!tokens && <>
+          <HAAPIProcessor haapiFetch={haapiFetch} setTokens={setTokens} />
         </>}
       </main>
     </div>
   );
 }
 
-const getUser = (tokens) => {
+const getSubject = (tokens) => {
     const idToken = tokens.id_token
     if (!idToken) {
         return null
