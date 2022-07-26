@@ -43,11 +43,22 @@
         <authentication-service xmlns="https://curity.se/ns/conf/profile/authentication">
           <authenticators>
             <authenticator>
+              <id>Google</id>
+              <google xmlns="https://curity.se/ns/conf/authenticators/google">
+                <client-id>dummy-client</client-id>
+              </google>
+            </authenticator>
+            <authenticator>
               <id>Username-Password</id>
               <html-form xmlns="https://curity.se/ns/conf/authenticators/html-form">
                 <account-manager>default-account-manager</account-manager>
                 <credential-manager>default-credential-manager</credential-manager>
               </html-form>
+            </authenticator>
+            <authenticator>
+              <id>username</id>
+              <username xmlns="https://curity.se/ns/ext-conf/username">
+              </username>
             </authenticator>
           </authenticators>
           <protocols>
@@ -87,6 +98,7 @@
     <profile>
       <id>token-service</id>
       <type xmlns:as="https://curity.se/ns/conf/profile/oauth">as:oauth-service</type>
+      <expose-detailed-error-messages/>
       <settings>
         <authorization-server xmlns="https://curity.se/ns/conf/profile/oauth">
           <authentication-service>
@@ -307,9 +319,6 @@
                     <allow-without-attestation>false</allow-without-attestation>
                   </haapi>
                 </capabilities>
-                <use-pairwise-subject-identifiers>
-                  <sector-identifier>react-client</sector-identifier>
-                </use-pairwise-subject-identifiers>
                 <validate-port-on-loopback-interfaces>true</validate-port-on-loopback-interfaces>
                 <attestation>
                   <web>

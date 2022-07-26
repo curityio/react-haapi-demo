@@ -7,33 +7,32 @@ import UsernamePasswordContinue from "../ui-kit/authenticators/UsernamePasswordC
 import ShowRawResponse from "./ShowRawResponse";
 import RedirectStep from "./RedirectStep";
 import {prettyPrintJson} from "pretty-print-json";
+import config from "../config";
 
 export default function HAAPIProcessor(props) {
     const { haapiFetch, setTokens } = props
-    const [ state, setState ] = useState({ step: null, type: null, haapiResponse: null, problem: null, isLoading: false })
+    const [ step, setStep ] = useState({ name: null, haapiResponse: null, inputProblem: null })
+    const [missingResponseType, setMissingResponseType ] = useState(null)
+    const [ problem, setProblem ] = useState(null)
+    const [ isLoading, setIsLoading ] = useState(false)
+    const [ codeVerifier, setCodeVerifier ] = useState(null)
     const [ followRedirects, setFollowRedirects ] = useState(true)
-
-    const setIsLoading = () => setState({
-        ...state,
-        isLoading: true
-    })
 
     useEffect( () => {
 
-        if (state.haapiResponse && state.haapiResponse.type === 'oauth-authorization-response') {
+        if (step.name === 'authorization-complete') {
             const fetchTokens = async () => {
-                const tokensResponse = await getTokens(state.haapiResponse.properties.code, state.codeVerifier)
+                const tokensResponse = await getTokens(step.haapiResponse.properties.code, codeVerifier)
                 const tokens = await tokensResponse.json()
-                console.log('Setting tokens')
-                console.log(tokens)
                 setTokens(tokens)
             }
 
             fetchTokens()
         }
-    }, [setTokens, state])
+    }, [setTokens, step, codeVerifier])
 
-    const processAuthenticationStep = (haapiResponse, followRedirect) => {
+    const processAuthenticationStep = () => {
+        const { haapiResponse } = step
         const view = haapiResponse.metadata.viewName
 
         switch (view) {
@@ -44,110 +43,134 @@ export default function HAAPIProcessor(props) {
             case 'authenticator/html-form/create-account/get':
                 return <UsernamePassword
                     haapiResponse={haapiResponse}
-                    submitForm={(formState, url, method) => submitForm(formState, url, method, followRedirect)}
-                    isLoading={state.isLoading}
-                    clickLink={(url) => clickLink(url, followRedirect)}
-                    inputProblem={state.inputProblem}
+                    submitForm={(formState, url, method) => submitForm(formState, url, method)}
+                    isLoading={isLoading}
+                    clickLink={(url) => clickLink(url)}
+                    inputProblem={step.inputProblem}
                 />
             case 'views/select-authenticator/index':
                 return <Selector
                     actions={haapiResponse.actions}
-                    submitForm={(url, method) => submitForm( null, url, method, followRedirect)}
+                    submitForm={(url, method) => submitForm( null, url, method)}
                 />
             case 'authenticator/html-form/reset-password/post':
             case 'authenticator/html-form/forgot-account-id/post':
             case 'authenticator/html-form/create-account/post':
                 return <UsernamePasswordContinue
                     haapiResponse={haapiResponse}
-                    isLoading={state.isLoading}
-                    submitForm={(url, method) => submitForm(null, url, method, followRedirect)}
+                    isLoading={isLoading}
+                    submitForm={(url, method) => submitForm(null, url, method)}
                 />
             default:
-                setState({ step: 'unknownStep', type: 'Authentication Step', haapiResponse: haapiResponse, problem: null, isLoading: false })
+                setStep({ name: 'unknown-step', haapiResponse: step.haapiResponse })
+                setMissingResponseType('Authentication Step')
         }
     }
 
-    const startAuthorization = async (followRedirect) => {
-        setState({ step: 'loading', type: null, haapiResponse: null, problem: null, isLoading: true })
+    const startAuthorization = async () => {
+        setStep({ name: 'loading', haapiResponse: null })
+        setIsLoading(true)
 
         const codeVerifier = generateRandomString(64)
-        setState({
-            ...state,
-            codeVerifier
-        })
+        setCodeVerifier(codeVerifier)
         const codeChallenge = await generateCodeChallenge(codeVerifier)
 
-        const haapiResponse = await callHaapi(
-            `https://localhost:8443/oauth/v2/oauth-authorize?scope=openid&client_id=react-client&response_type=code&code_challenge_method=S256&code_challenge=${codeChallenge}&redirect_uri=http://localhost:3000/`
-        )
+        const url = new URL(config.authorizationEndpoint)
+        const queryParams = url.searchParams
+        queryParams.append('client_id', config.clientId)
+        queryParams.append('scope', config.scope)
+        queryParams.append('response_type', 'code')
+        queryParams.append('code_challenge_method', 'S256')
+        queryParams.append('code_challenge', codeChallenge)
+        queryParams.append('redirect_uri', config.redirectUri)
 
-        await processHaapiResult(haapiResponse, codeVerifier, followRedirect)
+        const haapiResponse = await callHaapi(url)
+
+        setStep({ name: 'process-result', haapiResponse })
     }
 
-    const submitForm = async (formState, url, method, followRedirect) => {
-        setIsLoading()
-        const response = await callHaapi(
+    const submitForm = async (formState, url, method) => {
+        setIsLoading(true)
+        const haapiResponse = await callHaapi(
             url,
             method,
             formState
         )
 
-        await processHaapiResult(response, state.codeVerifier, followRedirect)
+        setStep({ name: 'process-result', haapiResponse})
     }
 
-    const processHaapiResult = async (haapiResponse, codeVerifier, followRedirect) => {
+    const processHaapiResult = async () => {
+        const { haapiResponse } = step
+        setIsLoading(false)
         switch (haapiResponse.type) {
             case 'redirection-step':
-                if (followRedirect) {
-                    return await processRedirect(haapiResponse, codeVerifier, followRedirect)
+                if (followRedirects) {
+                    return await processRedirect()
                 } else {
-                    setState({ step: 'show-redirect-step', haapiResponse, problem: null, isLoading: false, codeVerifier })
+                    setStep({ name: 'show-redirect-step', haapiResponse })
                 }
                 break
             case 'authentication-step':
-                setState({ step: 'authentication-step', haapiResponse, problem: null, isLoading: false, codeVerifier })
+                setStep({ name: 'authentication-step', haapiResponse })
                 break
             case 'registration-step':
-                setState({ step: 'registration-step', haapiResponse, problem: null, isLoading: false, codeVerifier })
+                setStep({ name: 'registration-step', haapiResponse })
                 break
             case 'https://curity.se/problems/incorrect-credentials':
-                setState({ step: state.haapiResponse.type, haapiResponse: state.haapiResponse, problem: haapiResponse, isLoading: false, codeVerifier })
+                setStep({ name: step.haapiResponse.type, haapiResponse: step.haapiResponse, problem: haapiResponse })
                 break
             case 'oauth-authorization-response':
-                setState({ step: 'authorization-complete', haapiResponse, isLoading: false, codeVerifier })
+                setStep({ name: 'authorization-complete', haapiResponse })
                 break
             case 'https://curity.se/problems/invalid-input':
-                setState({ step: state.haapiResponse.type, haapiResponse: state.haapiResponse, inputProblem: haapiResponse, isLoading: false, codeVerifier })
+                setStep({ name: step.haapiResponse.type, haapiResponse: step.haapiResponse, inputProblem: haapiResponse })
                 break
             default:
-                setState({ step: 'unknownStep', type: 'step type', haapiResponse: haapiResponse, problem: null, isLoading: false })
+                setStep({ name: 'unknown-step', haapiResponse })
+                setMissingResponseType('step type')
         }
     }
 
-    const clickLink = async (url, followRedirect) => {
-        const response = await callHaapi(
+    useEffect(() => {
+        switch (step.name) {
+            case 'process-result':
+                processHaapiResult()
+                break
+            case 'continue-redirect-step':
+                processRedirect()
+                break
+            default:
+                break
+        }
+    }, [ step ])
+
+    const clickLink = async (url) => {
+        const haapiResponse = await callHaapi(
             url,
             "GET",
             null
         )
 
-        await processHaapiResult(response, state.codeVerifier, followRedirect)
+        setStep({ name: 'process-result', haapiResponse })
     }
 
-    const processRedirect = async (haapiResult, codeVerifier, followRedirect) => {
-        const action = haapiResult.actions[0]
+    const processRedirect = async () => {
+        const action = step.haapiResponse.actions[0]
 
         if (action.template === 'form' && action.kind === 'redirect') {
-            const response = await callHaapi(
+            const haapiResponse = await callHaapi(
                 action.model.href,
                 action.model.method,
                 getRedirectBody(action.model.fields)
             )
 
-            return await processHaapiResult(response, codeVerifier, followRedirect)
+            setStep({ name: 'process-result', haapiResponse })
+            return
         }
 
-        setState({ step: 'unknownStep', type: 'Redirect Step', haapiResponse: haapiResult, problem: null, isLoading: false })
+        setStep({ name: 'unknown-step', haapiResponse: step.haapiResponse})
+        setMissingResponseType('Redirect Step')
     }
 
     const callHaapi = async (url, method = 'GET', body = null) => {
@@ -163,46 +186,43 @@ export default function HAAPIProcessor(props) {
 
     let stepComponent
 
-    switch (state.step) {
+    switch (step.name) {
         case 'loading':
+        case 'authorization-complete':
+        case 'continue-redirect-step':
+        case 'process-result':
             stepComponent = <div className="loader" />
             break
         case 'authentication-step':
         case 'registration-step':
-            stepComponent = processAuthenticationStep(state.haapiResponse, followRedirects)
-            break
-        case 'authorization-complete':
-            stepComponent = <div className="loader" />
-            break
-        case 'continue-redirect-step':
-            processRedirect(state.haapiResponse, state.codeVerifier, followRedirects)
-            stepComponent = <div className="loader" />
+            stepComponent = processAuthenticationStep()
             break
         case 'show-redirect-step':
-            stepComponent = <RedirectStep continueFlow={() => setState({ step: 'continue-redirect-step', isLoading: false, haapiResponse: state.haapiResponse, codeVerifier: state.codeVerifier, problem: null})}/>
+            stepComponent = <RedirectStep continueFlow={() => setStep({ name: 'continue-redirect-step', haapiResponse: step.haapiResponse })}/>
             break
-        case 'unknownStep':
+        case 'unknown-step':
             stepComponent = <>
-                <h2>Unknown {state.type}</h2>
+                <h2>Unknown {missingResponseType}</h2>
                 <p>Response:</p>
-                <pre className="json-container" dangerouslySetInnerHTML={{ __html: prettyPrintJson.toHtml(state.haapiResponse)}}></pre>
+                <pre className="json-container" dangerouslySetInnerHTML={{ __html: prettyPrintJson.toHtml(step.haapiResponse)}}></pre>
                 </>
             break
         default:
             stepComponent = <>
                 <p>Please log in</p>
-                <StartAuthorization startAuthorization={() => startAuthorization(followRedirects)} />
+                <StartAuthorization startAuthorization={() => startAuthorization()} />
             </>
     }
 
     return (<>
-        {state.problem && <Error message={state.problem.title} />}
+        {step.problem && <Error message={step.problem.title} />}
         {stepComponent}
-        <div>
+        <div className="example-app-settings active">
+            <h3 className="white">Settings</h3>
             <input type="checkbox" name="toggleFollowRedirects" checked={followRedirects} onChange={() => setFollowRedirects(!followRedirects)} />
             <label htmlFor="toggleFollowRedirects">Follow Redirects</label>
         </div>
-        {state.haapiResponse && <ShowRawResponse haapiResponse={state.haapiResponse} forceVisibility={state.step === 'show-redirect-step'} />}
+        {step.haapiResponse && <ShowRawResponse haapiResponse={step.haapiResponse} forceVisibility={step.name === 'show-redirect-step'} />}
     </>)
 }
 

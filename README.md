@@ -1,70 +1,35 @@
-# Getting Started with Create React App
+# HAAPI demo application with React
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a demo application tha implements the Hypermedia Authentication API to log users in. The application is written
+using the React framework.
 
-## Available Scripts
+## Running the demo
 
-In the project directory, you can run:
+To run the demo app:
 
-### `npm start`
+1. Install dependencies by running `npm i`
+2. Set configuration settings in `src/config.js`, e.g. endpoints of the Curity Identity Server, client ID, etc.
+3. Run the app with `npm start`. A browser will be opened navigating to `http://localhost:3000`.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Running with the provided instance of the Curity Identity Server
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+The `/idsvr` folder contains scripts that let you start an instance of the Curity Identity Server preconfigured to work with this app.
+You need Docker Desktop installed on your machine to run the scripts. To run the instance:
 
-### `npm test`
+1. Copy a `license.json` file to the `/idsvr` folder that contains a valid license for the Curity Identity Server. You can obtain
+   the license through Curity's [dev portal](https://developer.curity.io).
+2. Start the server with `./idsvr/deploy.sh`
+3. Start the demo app as described above.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Use the `./idsvr/teardown.sh` script to clear any containers created.
 
-### `npm run build`
+## Further Resources
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Have a look at these resources to learn more about Curity and HAAPI:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- [The Curity Identity Server's documentation](https://curity.io/docs)
+- [HAAPI documentation](https://curity.io/docs/haapi-web-sdk/latest/)
+- [HAAPI overview](https://curity.io/resources/learn/api-driven-demo-client/)
+- [Curity's resources](https://curity.io/resources/)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Don't hesitate to [contact us](https://curity.io/contact/) should you need any assistance with this demo. 

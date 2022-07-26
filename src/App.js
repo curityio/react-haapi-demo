@@ -8,6 +8,7 @@ import '../node_modules/pretty-print-json/dist/pretty-print-json.css'
 import {useState} from "react";
 import HAAPIProcessor from "./components/HAAPIProcessor";
 import haapiFetch from "./haapiFetch";
+import Authenticated from "./components/Authenticated";
 
 function App() {
   const [tokens, setTokens] = useState(null)
@@ -18,26 +19,11 @@ function App() {
         <img src="/curity-logo.svg" className="App-logo" alt="logo" />
       </header>
       <main>
-        {tokens && <>
-          <p>Logged in as { getSubject(tokens) } with access token {tokens.access_token}</p>
-        </>}
-        {!tokens && <>
-          <HAAPIProcessor haapiFetch={haapiFetch} setTokens={setTokens} />
-        </>}
+        {tokens && <Authenticated tokens={tokens} />}
+        {!tokens && <HAAPIProcessor haapiFetch={haapiFetch} setTokens={setTokens} />}
       </main>
     </div>
   );
-}
-
-const getSubject = (tokens) => {
-    const idToken = tokens.id_token
-    if (!idToken) {
-        return null
-    }
-
-    const dataPart = idToken.split('.')[1]
-    const claims = JSON.parse(atob(dataPart))
-    return claims.sub
 }
 
 export default App;

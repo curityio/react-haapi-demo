@@ -4,7 +4,7 @@ import Logo from "../ui-components/Logo";
 import Form from "../containers/Form";
 
 export default function UsernamePassword(props) {
-    const { actions, links } = props.haapiResponse
+    const { actions, links, messages } = props.haapiResponse
     const { model, title } = actions[0]
     const otherActions = actions.slice(1)
 
@@ -17,10 +17,16 @@ export default function UsernamePassword(props) {
         }))
     }
 
+    const computedTitle =
+        (messages && messages.find(m => m.classList.includes("heading"))?.text)
+        || title
+        || model.title
+
     return (<>
         <Logo />
         <Form
             model={model}
+            computedTitle={computedTitle}
             headingTitle={title}
             actions={actions}
             links={links}

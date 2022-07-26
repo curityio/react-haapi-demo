@@ -17,20 +17,16 @@ class Form extends Component {
   componentDidMount() {}
 
   render() {
-    const { links, href, submitForm, onChange, isLoading, clickLink, headingTitle, inputProblem } = this.props
-    const { title, actionTitle, fields } = this.props.model
+    const { links, href, submitForm, onChange, isLoading, clickLink, headingTitle, inputProblem, computedTitle } = this.props
+    const { actionTitle, fields } = this.props.model
 
-    const formTitle = headingTitle || title
-
-    console.log("Here is the form's model")
-    console.log(this.props.model)
-    console.log("Does the form has any problems?")
-    console.log(inputProblem)
+    const showSubtitle = headingTitle && computedTitle !== headingTitle
 
     return (
       <div className="form ">
         {inputProblem && <Error message={inputProblem.title}/>}
-        <Heading title={formTitle} />
+        <Heading title={computedTitle} />
+        {showSubtitle && <p>{headingTitle}</p>}
         {fields && fields.map(({ label, kind, name, type }) => (
           <FormField
             key={name}
