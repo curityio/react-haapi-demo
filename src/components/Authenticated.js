@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-import React, {useState} from 'react'
+import React from 'react'
 import Heading from "../ui-kit/ui-components/Heading";
 import {prettyPrintJson} from "pretty-print-json";
 
