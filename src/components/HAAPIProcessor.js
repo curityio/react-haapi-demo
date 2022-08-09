@@ -23,28 +23,21 @@ import UsernamePasswordContinue from "../ui-kit/authenticators/UsernamePasswordC
 import ShowRawResponse from "./ShowRawResponse";
 import RedirectStep from "./RedirectStep";
 import {prettyPrintJson} from "pretty-print-json";
-import config from "../config";
+import {OidcClient} from "./OidcClient";
 
 export default function HAAPIProcessor(props) {
     const { haapiFetch, setTokens } = props
+    const [ oidcClient ] = useState(new OidcClient())
     const [ step, setStep ] = useState({ name: null, haapiResponse: null, inputProblem: null })
-    const [missingResponseType, setMissingResponseType ] = useState(null)
+    const [ missingResponseType, setMissingResponseType ] = useState(null)
     const [ isLoading, setIsLoading ] = useState(false)
-    const [ codeVerifier, setCodeVerifier ] = useState(null)
     const [ followRedirects, setFollowRedirects ] = useState(true)
 
     useEffect( () => {
-
         if (step.name === 'authorization-complete') {
-            const fetchTokens = async () => {
-                const tokensResponse = await getTokens(step.haapiResponse.properties.code, codeVerifier)
-                const tokens = await tokensResponse.json()
-                setTokens(tokens)
-            }
-
-            fetchTokens()
+            oidcClient.fetchTokens(step.haapiResponse.properties.code, setTokens)
         }
-    }, [setTokens, step, codeVerifier])
+    }, [setTokens, step, oidcClient])
 
     const processAuthenticationStep = () => {
         const { haapiResponse } = step
@@ -86,19 +79,7 @@ export default function HAAPIProcessor(props) {
         setStep({ name: 'loading', haapiResponse: null })
         setIsLoading(true)
 
-        const codeVerifier = generateRandomString(64)
-        setCodeVerifier(codeVerifier)
-        const codeChallenge = await generateCodeChallenge(codeVerifier)
-
-        const url = new URL(config.authorizationEndpoint)
-        const queryParams = url.searchParams
-        queryParams.append('client_id', config.clientId)
-        queryParams.append('scope', config.scope)
-        queryParams.append('response_type', 'code')
-        queryParams.append('code_challenge_method', 'S256')
-        queryParams.append('code_challenge', codeChallenge)
-        queryParams.append('redirect_uri', config.redirectUri)
-
+        const url = await oidcClient.getAuthorizationUrl()
         const haapiResponse = await callHaapi(url)
 
         setStep({ name: 'process-result', haapiResponse })
@@ -241,15 +222,6 @@ export default function HAAPIProcessor(props) {
     </>)
 }
 
-const getTokens = async (code, codeVerifier) => await fetch('https://localhost:8443/oauth/v2/oauth-token', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: `client_id=react-client&grant_type=authorization_code&code=${code}&code_verifier=${codeVerifier}&redirect_uri=http://localhost:3000/`,
-        mode: 'cors'
-    })
-
 const getRedirectBody = (fields) => {
     if (!fields) {
         return null
@@ -262,23 +234,4 @@ const getRedirectBody = (fields) => {
     })
 
     return body
-}
-
-const generateRandomString = (length) => {
-    let text = "";
-    const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-    for (let i = 0; i < length; i++) {
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
-    }
-
-    return text;
-}
-
-const generateCodeChallenge = async (codeVerifier) => {
-    const digest = await crypto.subtle.digest("SHA-256",
-        new TextEncoder().encode(codeVerifier))
-
-    return btoa(String.fromCharCode(...new Uint8Array(digest)))
-        .replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_')
 }
