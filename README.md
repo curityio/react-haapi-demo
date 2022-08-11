@@ -18,8 +18,21 @@ You need Docker Desktop installed on your machine to run the scripts. To run the
 
 1. Copy a `license.json` file to the `/idsvr` folder that contains a valid license for the Curity Identity Server. You can obtain
    the license through Curity's [dev portal](https://developer.curity.io).
-2. Start the server with `./idsvr/deploy.sh`
-3. Start the demo app as described above.
+2. Copy `/idsvr/idsvr.env-template` to `/idsvr/idsvr.env`. You need to fill the proper configuration options only if you
+   want to use the Google authenticator. See [the section below](#configuring-the-google-authenticator) for details.
+3. Start the server with `./idsvr/deploy.sh`
+4. Start the demo app as described above.
+
+### Configuring the Google Authenticator
+
+The provided instance of the Curity Identity Server has a Google authenticator configured. This is to show how the Hypermedia
+Authentication API deals with authenticators that have to redirect the user to an external page. In order for the authenticator
+to work properly, you need to configure it with the client ID and client secret that will be used to perform the OIDC flow
+at Google. Have a look at [this documentation](https://cloud.google.com/docs/authentication/end-user) to learn how to
+register an OAuth client in the Google console. Once you've obtained an ID and secret, paste them in the `/idsvr/idsvr.env` file.
+
+Have a look at the [authenticator's documentation](https://curity.io/docs/idsvr/latest/authentication-service-admin-guide/authenticators/google.html)
+to learn what other options can be configured for this method.
 
 ### Accept the Self-Signed Certificate
 

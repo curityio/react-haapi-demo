@@ -27,6 +27,9 @@ services:
      - ./license.json:/opt/idsvr/etc/init/license/license.json
      - ./config-backup.xml:/opt/idsvr/etc/init/config.xml
      - ./log4j2.xml:/opt/idsvr/etc/log4j2.xml
+    env_file:
+      - ./idsvr.env
     environment:
       PASSWORD: 'Password1'
       LOGGING_LEVEL: DEBUG
+
