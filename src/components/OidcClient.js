@@ -34,8 +34,7 @@ const getTokens = async (code, codeVerifier) => await fetch(config.tokenEndpoint
     headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
     },
-    body: getBody(code, codeVerifier),
-    mode: 'cors' // TODO - is this required?
+    body: getBody(code, codeVerifier)
 })
 
 const getBody = (code, codeVerifier) => new URLSearchParams({

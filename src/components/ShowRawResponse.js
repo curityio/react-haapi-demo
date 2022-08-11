@@ -29,7 +29,7 @@ export default function ShowRawResponse(props) {
 
     return (<>
         <FormElement>
-            <input type="checkbox" checked={isResponseVisible} name="showRaw" onChange={() => setVisible(!isResponseVisible)} />
+            <input type="checkbox" checked={isResponseVisible} id="showRaw" onChange={() => setVisible(!isResponseVisible)} />
             <label htmlFor="showRaw">Show raw JSON response</label>
         </FormElement>
         <AnimateHeight
