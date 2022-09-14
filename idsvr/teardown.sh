@@ -28,4 +28,4 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 #
 # Free the Docker resources
 #
-docker compose --project-name oauthagent down
+docker compose --project-name idsvr down

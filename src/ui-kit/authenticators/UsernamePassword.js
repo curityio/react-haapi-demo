@@ -24,13 +24,13 @@ export default function UsernamePassword(props) {
     const { model, title } = actions[0]
     const otherActions = actions.slice(1)
 
-    const [state, setState] = useState({})
+    const [state, setState] = useState(new URLSearchParams())
 
     const onChange = (name, value) => {
-        setState((prevState) => ({
-            ...prevState,
-            [name]: value
-        }))
+        setState((prevState) => {
+            prevState.set(name, value)
+            return prevState
+        })
     }
 
     const computedTitle =

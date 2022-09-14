@@ -15,7 +15,6 @@
  */
 
 import React, { Component } from "react"
-import Heading from "../../ui-components/Heading";
 import FormField from "../../ui-components/FormField";
 import Button from "../../ui-components/Button";
 import Link from "../../ui-components/Link";
@@ -41,7 +40,7 @@ class Form extends Component {
     return (
       <div className="form ">
         {inputProblem && <Error message={inputProblem.title}/>}
-        <Heading title={computedTitle} />
+        <div className="heading">{computedTitle}</div>
         {showSubtitle && <p>{headingTitle}</p>}
         {fields && fields.map(({ label, kind, name, type }) => (
           <FormField

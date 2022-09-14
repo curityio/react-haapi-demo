@@ -24,7 +24,7 @@ export default function UsernamePasswordContinue(props) {
 
     return (<>
         {messages && messages.map((message) => (
-            <div className={message.classList.join(" ")}>{message.text}</div>
+            <div className={message.classList.join(" ") + " message"}>{message.text}</div>
         ))}
         <Form
             model={model}

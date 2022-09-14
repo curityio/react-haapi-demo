@@ -25,6 +25,7 @@ import {useState} from "react";
 import HAAPIProcessor from "./components/HAAPIProcessor";
 import haapiFetch from "./haapiFetch";
 import Authenticated from "./components/Authenticated";
+import Heading from "./ui-kit/ui-components/Heading";
 
 function App() {
   const [tokens, setTokens] = useState(null)
@@ -35,6 +36,7 @@ function App() {
         <img src="/curity-logo.svg" className="App-logo" alt="logo" />
       </header>
       <main>
+          <Heading title="React HAAPI demo" />
         {tokens && <Authenticated tokens={tokens} />}
         {!tokens && <HAAPIProcessor haapiFetch={haapiFetch} setTokens={setTokens} />}
       </main>

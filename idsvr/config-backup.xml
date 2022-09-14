@@ -45,7 +45,8 @@
             <authenticator>
               <id>Google</id>
               <google xmlns="https://curity.se/ns/conf/authenticators/google">
-                <client-id>dummy-client</client-id>
+                <client-id>#{GOOGLE_CLIENT_ID}</client-id>
+                <client-secret>#{GOOGLE_CLIENT_SECRET}</client-secret>
               </google>
             </authenticator>
             <authenticator>

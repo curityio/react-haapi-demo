@@ -16,10 +16,10 @@
 #  limitations under the License.                                           #
 #############################################################################
 
-##############################################################
-# Deploy the Curity Identity Server with the required settings
-# This enables the OAuth Agent to be tested in isolation 
-##############################################################
+#################################################################
+# Deploy the Curity Identity Server with the required settings. #
+# This enables to test the SPA                                  #
+#################################################################
 
 #
 # Ensure that we are in the folder containing this script
@@ -29,7 +29,7 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 #
 # This is for Curity developers only
 #
-cp ./pre-commit ../../../.git/hooks
+cp ./pre-commit ../.git/hooks
 
 #
 # Check for a license file
@@ -42,7 +42,7 @@ fi
 #
 # Run Docker to deploy the Curity Identity Server
 #
-docker compose --project-name oauthagent up --force-recreate
+docker compose --project-name idsvr up --force-recreate -d
 if [ $? -ne 0 ]; then
   echo "Problem encountered starting Docker components"
   exit 1

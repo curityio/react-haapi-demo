@@ -23,28 +23,22 @@ import UsernamePasswordContinue from "../ui-kit/authenticators/UsernamePasswordC
 import ShowRawResponse from "./ShowRawResponse";
 import RedirectStep from "./RedirectStep";
 import {prettyPrintJson} from "pretty-print-json";
-import config from "../config";
+import {OidcClient} from "./OidcClient";
+import Settings from "./Settings";
 
 export default function HAAPIProcessor(props) {
     const { haapiFetch, setTokens } = props
+    const [ oidcClient ] = useState(new OidcClient())
     const [ step, setStep ] = useState({ name: null, haapiResponse: null, inputProblem: null })
-    const [missingResponseType, setMissingResponseType ] = useState(null)
+    const [ missingResponseType, setMissingResponseType ] = useState(null)
     const [ isLoading, setIsLoading ] = useState(false)
-    const [ codeVerifier, setCodeVerifier ] = useState(null)
     const [ followRedirects, setFollowRedirects ] = useState(true)
 
     useEffect( () => {
-
         if (step.name === 'authorization-complete') {
-            const fetchTokens = async () => {
-                const tokensResponse = await getTokens(step.haapiResponse.properties.code, codeVerifier)
-                const tokens = await tokensResponse.json()
-                setTokens(tokens)
-            }
-
-            fetchTokens()
+            oidcClient.fetchTokens(step.haapiResponse.properties.code, setTokens)
         }
-    }, [setTokens, step, codeVerifier])
+    }, [setTokens, step, oidcClient])
 
     const processAuthenticationStep = () => {
         const { haapiResponse } = step
@@ -76,6 +70,9 @@ export default function HAAPIProcessor(props) {
                     isLoading={isLoading}
                     submitForm={(url, method) => submitForm(null, url, method)}
                 />
+            case 'authenticator/external-browser/launch':
+                setStep({ name: 'external-browser-launch', haapiResponse: step.haapiResponse })
+                return
             default:
                 setStep({ name: 'unknown-step', haapiResponse: step.haapiResponse })
                 setMissingResponseType('Authentication Step')
@@ -86,19 +83,7 @@ export default function HAAPIProcessor(props) {
         setStep({ name: 'loading', haapiResponse: null })
         setIsLoading(true)
 
-        const codeVerifier = generateRandomString(64)
-        setCodeVerifier(codeVerifier)
-        const codeChallenge = await generateCodeChallenge(codeVerifier)
-
-        const url = new URL(config.authorizationEndpoint)
-        const queryParams = url.searchParams
-        queryParams.append('client_id', config.clientId)
-        queryParams.append('scope', config.scope)
-        queryParams.append('response_type', 'code')
-        queryParams.append('code_challenge_method', 'S256')
-        queryParams.append('code_challenge', codeChallenge)
-        queryParams.append('redirect_uri', config.redirectUri)
-
+        const url = await oidcClient.getAuthorizationUrl()
         const haapiResponse = await callHaapi(url)
 
         setStep({ name: 'process-result', haapiResponse })
@@ -155,17 +140,19 @@ export default function HAAPIProcessor(props) {
             case 'continue-redirect-step':
                 processRedirect()
                 break
+            case 'continue-continue-step':
+                processContinue()
+                break
+            case 'external-browser-launch':
+                launchExternalBrowser()
+                break
             default:
                 break
         }
     }, [ step ])
 
     const clickLink = async (url) => {
-        const haapiResponse = await callHaapi(
-            url,
-            "GET",
-            null
-        )
+        const haapiResponse = await callHaapi(url)
 
         setStep({ name: 'process-result', haapiResponse })
     }
@@ -188,15 +175,98 @@ export default function HAAPIProcessor(props) {
         setMissingResponseType('Redirect Step')
     }
 
-    const callHaapi = async (url, method = 'GET', body = null) => {
-        const init = { method }
-        if (body) {
-            init.body = body
+    const processContinue = async () => {
+        const continueAction = step.haapiResponse.actions[0].model.continueActions[0]
+
+        if (continueAction && continueAction.template === 'form' && continueAction.kind === 'continue') {
+            const haapiResponse = await callHaapi(
+                continueAction.model.href,
+                continueAction.model.method,
+                getRedirectBody(continueAction.model.fields)
+            )
+
+            setStep({ name: 'process-result', haapiResponse })
+            return
         }
 
-        const response = await haapiFetch(url, init)
+        setStep({ name: 'unknown-step', haapiResponse: step.haapiResponse})
+        setMissingResponseType('Continue Step')
+    }
+
+    const launchExternalBrowser = async () => {
+        const url = step.haapiResponse.actions[0].model.arguments.href + "&for_origin=" + window.location
+        const popup = window.open(url)
+
+        window.addEventListener('message', async event => {
+            if (event.source !== popup) {
+                return
+            }
+
+            if (!followRedirects) {
+                step.haapiResponse.actions[0].model.continueActions[0].model.fields[0].value = event.data
+                setStep({ name: 'show-continue-step', haapiResponse: step.haapiResponse })
+            } else {
+                const continueAction = step.haapiResponse.actions[0].model.continueActions[0]
+
+                const haapiResponse = await callHaapi(
+                    continueAction.model.href,
+                    continueAction.model.method,
+                    new URLSearchParams({ '_resume_nonce': event.data })
+                )
+                setStep({ name: 'process-result', haapiResponse })
+            }
+
+            setTimeout(() => popup.close(), 3000)
+        })
+    }
+
+    const callHaapi = async (url, method = 'GET', data = null) => {
+        const init = { method }
+        let finalUrl = url
+
+        if (data) {
+            if (method === 'POST' || method === 'PUT') {
+                init.body = data
+            } else {
+                finalUrl = new URL(url)
+                data.forEach((value, key) => {
+                    finalUrl.searchParams.set(key, value)
+                })
+            }
+        }
+
+        const response = await haapiFetch(finalUrl, init)
 
         return await response.json()
+    }
+
+    const renderCancelForm = (action) => {
+        const { model } = action
+        const fields = new URLSearchParams(model.fields.map(field => [field.name, field.value]))
+        return <div className="form" key={action.title}>
+            <p>{model.title}</p>
+            <button onClick={() => submitForm(fields, model.href, model.method)}>{model.actionTitle}</button>
+        </div>
+    }
+
+    const renderForm = (action) => {
+        switch (action.kind) {
+            case 'cancel':
+                return renderCancelForm(action)
+            default:
+                return <></>
+        }
+    }
+
+    const renderAction = (action) => {
+        switch (action.template) {
+            case 'form':
+                return renderForm(action)
+            default:
+                return <>
+                </>
+        }
+
     }
 
     let stepComponent
@@ -215,6 +285,16 @@ export default function HAAPIProcessor(props) {
         case 'show-redirect-step':
             stepComponent = <RedirectStep continueFlow={() => setStep({ name: 'continue-redirect-step', haapiResponse: step.haapiResponse })}/>
             break
+        case 'show-continue-step':
+            stepComponent = <RedirectStep type="Continue" continueFlow={() => setStep({ name: 'continue-continue-step', haapiResponse: step.haapiResponse })} />
+            break
+        case 'external-browser-launch':
+            const remainingActions = step.haapiResponse.actions.slice(1)
+            stepComponent = <>
+                <p>{step.haapiResponse.actions[0].title}</p>
+                {remainingActions && remainingActions.map(action => renderAction(action))}
+            </>
+            break
         case 'unknown-step':
             stepComponent = <>
                 <h2>Unknown {missingResponseType}</h2>
@@ -224,61 +304,24 @@ export default function HAAPIProcessor(props) {
             break
         default:
             stepComponent = <>
-                <p>Please log in</p>
+                <div className="heading">This is a demo app showing HAAPI capabilities</div>
+                <p>Click the button below to start the login flow without leaving this SPA</p>
                 <StartAuthorization startAuthorization={() => startAuthorization()} />
             </>
     }
 
     return (<>
+        <Settings followRedirects={followRedirects} setFollowRedirects={setFollowRedirects} />
         {step.problem && <Error message={step.problem.title} />}
         {stepComponent}
-        <div className="example-app-settings active">
-            <h3 className="white">Settings</h3>
-            <input type="checkbox" name="toggleFollowRedirects" checked={followRedirects} onChange={() => setFollowRedirects(!followRedirects)} />
-            <label htmlFor="toggleFollowRedirects">Follow Redirects</label>
-        </div>
-        {step.haapiResponse && <ShowRawResponse haapiResponse={step.haapiResponse} forceVisibility={step.name === 'show-redirect-step'} />}
+        {step.haapiResponse && <ShowRawResponse haapiResponse={step.haapiResponse} forceVisibility={step.name === 'show-redirect-step' || step.name === 'show-continue-step'} />}
     </>)
 }
-
-const getTokens = async (code, codeVerifier) => await fetch('https://localhost:8443/oauth/v2/oauth-token', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: `client_id=react-client&grant_type=authorization_code&code=${code}&code_verifier=${codeVerifier}&redirect_uri=http://localhost:3000/`,
-        mode: 'cors'
-    })
 
 const getRedirectBody = (fields) => {
     if (!fields) {
         return null
     }
 
-    const body = {}
-
-    fields.forEach(field => {
-        body[field.name] = field.value
-    })
-
-    return body
-}
-
-const generateRandomString = (length) => {
-    let text = "";
-    const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-    for (let i = 0; i < length; i++) {
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
-    }
-
-    return text;
-}
-
-const generateCodeChallenge = async (codeVerifier) => {
-    const digest = await crypto.subtle.digest("SHA-256",
-        new TextEncoder().encode(codeVerifier))
-
-    return btoa(String.fromCharCode(...new Uint8Array(digest)))
-        .replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_')
+    return new URLSearchParams(fields.map(field => [field.name, field.value]))
 }

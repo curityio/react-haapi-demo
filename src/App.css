@@ -55,3 +55,19 @@
 pre {
   text-align: left;
 }
+
+main {
+  padding-top: 2em;
+}
+
+.message {
+  padding: 0.5em;
+}
+
+.heading {
+  font-weight: bold;
+}
+
+.recipientOfCommunication {
+  font-style: italic;
+}
