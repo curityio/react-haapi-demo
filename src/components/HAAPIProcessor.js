@@ -16,9 +16,16 @@
 
 import {useEffect, useState} from "react"
 import StartAuthorization from "./StartAuthorization";
+
+/* UI Authenticators */
 import UsernamePassword from "../ui-kit/authenticators/UsernamePassword";
-import Error from "../ui-kit/ui-components/Error";
+
+/* UI Containers */
 import Selector from "../ui-kit/containers/Selector";
+
+/* UI Components */
+import { Spinner, Error, Layout, Page, Well, Logo } from "../ui-kit/ui-components";
+
 import UsernamePasswordContinue from "../ui-kit/authenticators/UsernamePasswordContinue";
 import ShowRawResponse from "./ShowRawResponse";
 import RedirectStep from "./RedirectStep";
@@ -65,9 +72,9 @@ export default function HAAPIProcessor(props) {
                 />
             case 'views/select-authenticator/index':
                 return <Selector
-                    actions={haapiResponse.actions}
-                    submitForm={(url, method) => submitForm( null, url, method)}
-                />
+                        actions={haapiResponse.actions}
+                        submitForm={(url, method) => submitForm( null, url, method)}
+                        />
             case 'authenticator/html-form/reset-password/post':
             case 'authenticator/html-form/forgot-account-id/post':
             case 'authenticator/html-form/create-account/post':
@@ -206,7 +213,7 @@ export default function HAAPIProcessor(props) {
         case 'authorization-complete':
         case 'continue-redirect-step':
         case 'process-result':
-            stepComponent = <div className="loader" />
+            stepComponent = <Spinner/>
             break
         case 'authentication-step':
         case 'registration-step':
@@ -216,28 +223,57 @@ export default function HAAPIProcessor(props) {
             stepComponent = <RedirectStep continueFlow={() => setStep({ name: 'continue-redirect-step', haapiResponse: step.haapiResponse })}/>
             break
         case 'unknown-step':
-            stepComponent = <>
-                <h2>Unknown {missingResponseType}</h2>
-                <p>Response:</p>
-                <pre className="json-container" dangerouslySetInnerHTML={{ __html: prettyPrintJson.toHtml(step.haapiResponse)}}></pre>
-                </>
+            stepComponent =
+            <Layout>
+                <Page>
+                    <Well>
+                        <Logo />
+                        <Error message={`Unknown ${missingResponseType}`} />
+                        <div className="example-app-settings active">
+                            <h3>Response</h3>
+                            <pre className="json-container" dangerouslySetInnerHTML={{ __html: prettyPrintJson.toHtml(step.haapiResponse)}}></pre>
+                        </div>
+                    </Well>
+                </Page>
+            </Layout>
             break
         default:
-            stepComponent = <>
-                <p>Please log in</p>
-                <StartAuthorization startAuthorization={() => startAuthorization()} />
-            </>
+            stepComponent =
+            <Layout>
+                <Page>
+                    <Well>
+                        <Logo />
+                        {step.problem && <Error message={step.problem.title} />}
+                        <div className="area">
+                            <h1 className="center">Please log in</h1>
+                        </div>
+                        <StartAuthorization startAuthorization={() => startAuthorization()} />
+                    </Well>
+                </Page>
+            </Layout>
     }
 
     return (<>
-        {step.problem && <Error message={step.problem.title} />}
+        {/* {step.problem && <Error message={step.problem.title} />} */}
         {stepComponent}
         <div className="example-app-settings active">
-            <h3 className="white">Settings</h3>
-            <input type="checkbox" name="toggleFollowRedirects" checked={followRedirects} onChange={() => setFollowRedirects(!followRedirects)} />
+
+        <img
+          src="/images/curity-api-react.svg"
+          className="py4 mx-auto block"
+          style={{ maxWidth: "300px" }}
+          alt="Curity HAAPI React Demo"
+        />
+
+        <h1>HAAPI demo application with React</h1>
+
+        <h3 className="white">Settings</h3>
+        <div className="form-field flex flex-center">
+            <input className="mr1" type="checkbox" id="toggleFollowRedirects" name="toggleFollowRedirects" checked={followRedirects} onChange={() => setFollowRedirects(!followRedirects)} />
             <label htmlFor="toggleFollowRedirects">Follow Redirects</label>
         </div>
         {step.haapiResponse && <ShowRawResponse haapiResponse={step.haapiResponse} forceVisibility={step.name === 'show-redirect-step'} />}
+        </div>
     </>)
 }
 

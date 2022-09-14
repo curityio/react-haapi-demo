@@ -14,13 +14,31 @@
  *  limitations under the License.
  */
 
-import React from 'react'
+import React from "react";
+
+/* UI Components */
+import { Layout, Page, Well, Logo } from "../ui-kit/ui-components";
 
 export default function RedirectStep(props) {
-    const { continueFlow } = props
-    return (<>
-        <h1>Redirect step</h1>
-        <p>Normally, a user will not be able to see this step. Click "Continue" to continue to the next step.</p>
-        <button className="button button-primary" onClick={continueFlow}>Continue</button>
-    </>)
+  const { continueFlow } = props;
+  return (
+    <>
+      <Layout>
+        <Page>
+          <Well>
+            <Logo />
+            <h1>Redirect step</h1>
+
+            <p>
+              Normally, a user will not be able to see this step. Click
+              "Continue" to continue to the next step.
+            </p>
+            <button className="button button-primary button-fullwidth" onClick={continueFlow}>
+              Continue
+            </button>
+          </Well>
+        </Page>
+      </Layout>
+    </>
+  );
 }

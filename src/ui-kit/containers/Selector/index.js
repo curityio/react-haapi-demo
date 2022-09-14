@@ -15,9 +15,9 @@
  */
 
 import React from "react"
-import Heading from "../../ui-components/Heading";
-import Button from "../../ui-components/Button";
-import FormElement from "../../ui-components/FormElement";
+
+/* UI Components */
+import { Layout, Page, Well, Logo, Heading, Button, FormElement } from "../../ui-components";
 
 /* UI Components */
 
@@ -27,15 +27,20 @@ const Selector = (props) => {
   const title = actions[0].title
 
   return (
-    <div className="form">
-      <Heading title={title} />
+    <Layout>
+      <Page>
+        <Well>
+          <Logo />
+          <Heading title={title} />
 
-      {options.map(({ title, properties: { authenticatorType: kind }, model }) => (
-        <FormElement key={title}>
-          <Button title={title} authenticator={kind} type="social" loading={false} submitForm={() => submitForm(model.href, model.method)} />
-        </FormElement>
-      ))}
-    </div>
+          {options.map(({ title, properties: { authenticatorType: kind }, model }) => (
+            <FormElement key={title}>
+              <Button title={title} authenticator={kind} type="social" loading={false} submitForm={() => submitForm(model.href, model.method)} />
+            </FormElement>
+          ))}
+        </Well>
+      </Page>
+    </Layout>
   )
 }
 

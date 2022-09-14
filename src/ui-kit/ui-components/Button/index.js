@@ -30,7 +30,7 @@ const Button = (props) => {
     kind === "regular"
       ? `button-primary button-loading ${loading && "button-loading-active"}`
       : "button-social"
-    const classNames = `button button-fullwidth ${buttonType} button-${authenticator}`
+    const classNames = `mt2 button button-fullwidth ${buttonType} button-${authenticator}`
 
     return (
     <button className={classNames} onClick={(event) => handleClick(event)}>

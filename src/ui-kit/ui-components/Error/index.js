@@ -14,21 +14,19 @@
  *  limitations under the License.
  */
 
-import React from "react"
-
-// TODO: This is old. Will be updated soon
+import React from "react";
 
 const Error = (props) => {
-  const { message } = props
+  const { message } = props;
   const errorText = message.hasOwnProperty.statusText
     ? message.statusText
-    : message
+    : message;
 
   return (
     <div className="error">
       <div className="alert alert-danger px4 mt2">{errorText}</div>
     </div>
-  )
-}
+  );
+};
 
-export default Error
+export default Error;

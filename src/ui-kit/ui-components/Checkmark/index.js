@@ -14,34 +14,31 @@
  *  limitations under the License.
  */
 
-import React from "react"
-
-import { theme } from "../../../settings.js"
+import React from "react";
 
 const Logo = () => {
-  const { logo, skin } = theme
-
-  console.log(logo)
   return (
-    <>
-      {skin.loginFormBackground === "form-transparent" &&
-      skin.bodyBackground === "body-dark" ? (
-        <img
-          className="login-logo"
-          src={logo.logoWhitePath}
-          alt="Logo"
-          role="presentation"
+    <div class="checkmark-wrapper">
+      <svg
+        className="checkmark"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 52 52"
+      >
+        <circle
+          className="checkmark-circle"
+          cx={26}
+          cy={26}
+          r={25}
+          fill="none"
         />
-      ) : (
-        <img
-          className="login-logo"
-          src={logo.logoPath}
-          alt="Logo"
-          role="presentation"
+        <path
+          className="checkmark-check"
+          fill="none"
+          d="m14.1 27.2 7.1 7.2 16.7-16.8"
         />
-      )}
-    </>
-  )
-}
+      </svg>
+    </div>
+  );
+};
 
-export default Logo
+export default Logo;
