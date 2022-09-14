@@ -17,7 +17,7 @@
 import React, { Component } from "react"
 
 /* UI Components */
-import { FormField, Button, Link, Error } from "../../ui-components";
+import {FormField, Button, Link, Error, Heading} from "../../ui-components";
 
 class Form extends Component {
   constructor(props) {
@@ -39,7 +39,7 @@ class Form extends Component {
     return (
       <>
         {inputProblem && <Error message={inputProblem.title}/>}
-        <div className="heading">{computedTitle}</div>
+        <Heading title={computedTitle} />
         {showSubtitle && <p>{headingTitle}</p>}
         {fields && fields.map(({ label, kind, name, type }) => (
           <FormField

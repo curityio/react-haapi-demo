@@ -24,12 +24,13 @@ export default function ShowRawResponse(props) {
 
   const { haapiResponse, forceVisibility } = props;
 
-  const isResponseVisible = visible || forceVisibility;
+  // const isResponseVisible = visible || forceVisibility;
 
   return (
     <>
       <FormElement>
-        <input
+          {/* For now, the raw response is always displayed */}
+          {/*<input
           type="checkbox"
           checked={isResponseVisible}
           name="showRaw"
@@ -37,7 +38,7 @@ export default function ShowRawResponse(props) {
           className="mr1"
           onChange={() => setVisible(!isResponseVisible)}
         />
-        <label htmlFor="showRaw">Show raw JSON response</label>
+        <label htmlFor="showRaw">Show raw JSON response</label> */}
       </FormElement>
       <pre
         className="json-container"

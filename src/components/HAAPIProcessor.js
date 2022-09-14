@@ -24,7 +24,7 @@ import UsernamePassword from "../ui-kit/authenticators/UsernamePassword";
 import Selector from "../ui-kit/containers/Selector";
 
 /* UI Components */
-import { Spinner, Error, Layout, Page, Well, Logo } from "../ui-kit/ui-components";
+import {Spinner, Error, Layout, Page, Well, Logo, Heading} from "../ui-kit/ui-components";
 
 import UsernamePasswordContinue from "../ui-kit/authenticators/UsernamePasswordContinue";
 import ShowRawResponse from "./ShowRawResponse";
@@ -325,7 +325,7 @@ export default function HAAPIProcessor(props) {
                         <Logo />
                         {step.problem && <Error message={step.problem.title} />}
                         <div className="area">
-                            <div className="heading">This is a demo app showing HAAPI capabilities</div>
+                            <Heading title="This is a demo app showing HAAPI capabilities" />
                             <p>Click the button below to start the login flow without leaving this SPA</p>
                         </div>
                         <StartAuthorization startAuthorization={() => startAuthorization()} />
