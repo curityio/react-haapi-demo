@@ -16,8 +16,11 @@
 
 import React, {useState} from "react";
 
-import Logo from "../ui-components/Logo";
+/* UI Containers */
 import Form from "../containers/Form";
+
+/* UI Components */
+import { Layout, Page, Well, Logo } from "../ui-components";
 
 export default function UsernamePassword(props) {
     const { actions, links, messages } = props.haapiResponse
@@ -38,24 +41,30 @@ export default function UsernamePassword(props) {
         || title
         || model.title
 
-    return (<>
-        <Logo />
-        <Form
-            model={model}
-            computedTitle={computedTitle}
-            headingTitle={title}
-            actions={actions}
-            links={links}
-            submitForm={() => props.submitForm(state, model.href, model.method)}
-            onChange={onChange}
-            isLoading={props.isLoading}
-            clickLink={props.clickLink}
-            inputProblem={props.inputProblem}
-        />
-        {otherActions.map(action => <Form
-            key={action.model.href}
-            model={action.model}
-            submitForm={() => props.submitForm(null, action.model.href, action.model.method)}
-        />)}
-    </>)
+    return (
+      <Layout>
+        <Page>
+            <Well>
+                <Logo />
+                <Form
+                    model={model}
+                    computedTitle={computedTitle}
+                    headingTitle={title}
+                    actions={actions}
+                    links={links}
+                    submitForm={() => props.submitForm(state, model.href, model.method)}
+                    onChange={onChange}
+                    isLoading={props.isLoading}
+                    clickLink={props.clickLink}
+                    inputProblem={props.inputProblem}
+                />
+                {otherActions.map(action => <Form
+                    key={action.model.href}
+                    model={action.model}
+                    submitForm={() => props.submitForm(null, action.model.href, action.model.method)}
+                />)}
+            </Well>
+        </Page>
+    </Layout>
+    )
 }

@@ -9,36 +9,23 @@
  * For further information, please contact Curity AB.
  */
 
-$spinner-margin: 2rem auto !default;
+$spinner-margin: 10px auto !default;
 $size: 30px !default;
-$spinner-color: $primary !default;
-
-/*
- *  Usage:
- *
-  <div class="waiting-spinner">
-      <div class="waiting-spinner-child waiting-spinner-bounce1"></div>
-      <div class="waiting-spinner-child waiting-spinner-bounce2"></div>
-      <div class="waiting-spinner-child waiting-spinner-bounce3"></div>
-  </div>
- *
- */
 
 .waiting-spinner {
   $animationDuration: 1.4s;
   $delayRange: 0.32s;
 
   margin: $spinner-margin;
-  width: $size * 2;
   text-align: center;
 
   .waiting-spinner-child {
-    width: $size / 2;
-    height: $size / 2;
-    background-color: $spinner-color;
+    animation: waiting-spinner $animationDuration ease-in-out 0s infinite both;
+    background-color: var(--color-primary);
     border-radius: 100%;
     display: inline-block;
-    animation: waiting-spinner $animationDuration ease-in-out 0s infinite both;
+    height: calc(#{$size} / 2);
+    width: calc(#{$size} / 2);
   }
 
   .waiting-spinner-bounce1 {
@@ -46,8 +33,12 @@ $spinner-color: $primary !default;
   }
 
   .waiting-spinner-bounce2 {
-    animation-delay: -$delayRange / 2;
+    animation-delay: calc(-#{$delayRange} / 2);
   }
+}
+
+.body-dark .waiting-spinner .waiting-spinner-child {
+    background-color: var(--color-primary-light)
 }
 
 @keyframes waiting-spinner {
@@ -60,4 +51,8 @@ $spinner-color: $primary !default;
   40% {
     transform: scale(1);
   }
+}
+
+.waiting-spinner p {
+  margin: 0;
 }

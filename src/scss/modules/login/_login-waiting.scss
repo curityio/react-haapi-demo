@@ -10,25 +10,28 @@
  */
 
 .login-waiting {
-	height: 100%;
+  height: 100%;
 }
 
 .waiting-overlay {
-	margin: auto;
-	position: absolute;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	right: 0;
-	background-color: rgba(white, 0.85);
-	width: 100%;
-	height: 100%;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: white;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .body-dark.waiting-overlay {
-	background-color: $background-color-dark;
+  background-color: var(--color-primary-dark);
 }
 
 .body-dark.waiting-overlay p {
-	color: white;
+  color: white;
 }

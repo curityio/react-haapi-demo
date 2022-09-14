@@ -15,10 +15,9 @@
  */
 
 import React, { Component } from "react"
-import FormField from "../../ui-components/FormField";
-import Button from "../../ui-components/Button";
-import Link from "../../ui-components/Link";
-import Error from "../../ui-components/Error";
+
+/* UI Components */
+import {FormField, Button, Link, Error, Heading} from "../../ui-components";
 
 class Form extends Component {
   constructor(props) {
@@ -38,9 +37,9 @@ class Form extends Component {
     const showSubtitle = headingTitle && computedTitle !== headingTitle
 
     return (
-      <div className="form ">
+      <>
         {inputProblem && <Error message={inputProblem.title}/>}
-        <div className="heading">{computedTitle}</div>
+        <Heading title={computedTitle} />
         {showSubtitle && <p>{headingTitle}</p>}
         {fields && fields.map(({ label, kind, name, type }) => (
           <FormField
@@ -53,7 +52,7 @@ class Form extends Component {
             fieldProblem={inputProblem && inputProblem.invalidFields.find((field) => field.name === name)}
           />
         ))}
-        <Button href={href} title={actionTitle} submitForm={submitForm} kind="regular" margin="mt2" loading={isLoading} />
+        <Button href={href} title={actionTitle} submitForm={submitForm} kind="regular" loading={isLoading} />
         <div className="mt3 clearfix">
           <div className="center py2 login-action flex flex-column">
             {links &&
@@ -62,7 +61,7 @@ class Form extends Component {
               ))}
           </div>
         </div>
-      </div>
+      </>
     )
   }
 }

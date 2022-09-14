@@ -16,22 +16,33 @@
 
 import React from "react";
 
+/* UI Containers */
 import Form from "../containers/Form";
+
+/* UI Components */
+import { Layout, Page, Well, Logo } from "../ui-components";
 
 export default function UsernamePasswordContinue(props) {
     const { actions, links, messages } = props.haapiResponse
     const { model, title } = actions[0]
 
-    return (<>
-        {messages && messages.map((message) => (
-            <div className={message.classList.join(" ") + " message"}>{message.text}</div>
-        ))}
-        <Form
-            model={model}
-            headingTitle={title}
-            links={links}
-            submitForm={() => props.submitForm(model.href, model.method)}
-            isLoading={props.isLoading}
-        />
-    </>)
+    return (
+        <Layout>
+            <Page>
+                <Well>
+                    <Logo />
+                    {messages && messages.map((message) => (
+                        <div className={message.classList.join(" ")}>{message.text}</div>
+                    ))}
+                    <Form
+                        model={model}
+                        headingTitle={title}
+                        links={links}
+                        submitForm={() => props.submitForm(model.href, model.method)}
+                        isLoading={props.isLoading}
+                    />
+                </Well>
+            </Page>
+        </Layout>
+    )
 }

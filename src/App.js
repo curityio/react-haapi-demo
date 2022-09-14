@@ -18,29 +18,27 @@
 import "./scss/main.scss"
 import "./scss/curity-theme.scss"
 import "./scss/curity-example-app.scss"
-import './App.css'
 import '../node_modules/pretty-print-json/dist/pretty-print-json.css'
+import { Header, Layout, Main } from "./components/example"
 
 import {useState} from "react";
+
+/* HAAPI */
 import HAAPIProcessor from "./components/HAAPIProcessor";
 import haapiFetch from "./haapiFetch";
 import Authenticated from "./components/Authenticated";
-import Heading from "./ui-kit/ui-components/Heading";
 
 function App() {
   const [tokens, setTokens] = useState(null)
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src="/curity-logo.svg" className="App-logo" alt="logo" />
-      </header>
-      <main>
-          <Heading title="React HAAPI demo" />
+    <Layout>
+      <Header/>
+      <Main>
         {tokens && <Authenticated tokens={tokens} />}
         {!tokens && <HAAPIProcessor haapiFetch={haapiFetch} setTokens={setTokens} />}
-      </main>
-    </div>
+      </Main>
+    </Layout>
   );
 }
 

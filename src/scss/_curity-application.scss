@@ -9,9 +9,11 @@
  * For further information, please contact Curity AB.
  */
 
-/*-------------------------------------------------------------------
+/* -------------------------------------------------------------------
 Base
--------------------------------------------------------------------*/
+------------------------------------------------------------------- */
+@import "base/reset";
+@import "base/media";
 @import "base/base-base";
 @import "base/base-type";
 @import "base/base-links";
@@ -22,35 +24,56 @@ Base
 @import "base/base-progress";
 @import "base/base-utility";
 
-/*-------------------------------------------------------------------
+/* -------------------------------------------------------------------
+Utilities
+------------------------------------------------------------------- */
+@import "utilities/utilities-base";
+@import "utilities/utilities-type";
+@import "utilities/utilities-color";
+@import "utilities/utilities-width";
+@import "utilities/utilities-height";
+@import "utilities/utilities-grid";
+@import "utilities/utilities-grid-legacy";
+@import "utilities/utilities-border-radius";
+@import "utilities/utilities-z-index";
+@import "utilities/utilities-flexbox";
+@import "utilities/utilities-animations";
+@import "utilities/utilities-whitespace";
+@import "utilities/utilities-ellipsis";
+@import "utilities/utilities-layout";
+@import "utilities/utilities-positions";
+@import "utilities/utilities-visibility";
+
+/* -------------------------------------------------------------------
 Components
--------------------------------------------------------------------*/
+------------------------------------------------------------------- */
 @import "component/component-alert";
 @import "component/component-well";
 @import "component/component-spinner";
+@import "component/component-done";
 
-/*-------------------------------------------------------------------
+/* -------------------------------------------------------------------
 Modules
--------------------------------------------------------------------*/
+------------------------------------------------------------------- */
 // Login
 @import "modules/login/login-base";
 @import "modules/login/login-well";
+@import "modules/login/login-symbol";
+@import "modules/login/login-powered-by";
 @import "modules/login/login-header";
-@import "modules/login/login-wizard";
 @import "modules/login/login-iframe";
-@import "modules/login/login-info";
 @import "modules/login/login-chooser";
 @import "modules/login/login-waiting";
 @import "modules/login/login-skin";
 
-// Admin
-@import "modules/admin/admin-users";
-
-// Self service
-@import "modules/selfservice/self-service";
+// Done checkmark
+@import "modules/done/done-checkmark";
 
 // Device flow
 @import "modules/deviceflow/deviceflow";
 
 // Consent
 @import "modules/consent/module-consent";
+
+// Opt-in MFA
+@import "modules/opt-in-mfa/module-opt-in-mfa";

@@ -10,20 +10,29 @@
  */
 
 // Login page background
+
+body {
+  background-image: var(--page-background-gradient);
+  background-image: var(--page-background-image-url);
+  background-position: var(--page-background-position);
+  background-repeat: var(--page-background-repeat);
+  background-size: var(--page-background-size);
+}
+
 .body-light {
-  background-image: none;
-  background-color: $background-color;
+  background-color: var(--page-background-color);
 }
 
 .body-dark {
-  background-image: none;
-  background-color: $background-color-dark;
+  background-color: var(--page-background-color-dark);
 }
 
-// // Body dark login actions
-// .body-dark .form-transparent .login-actions a {
-//   color: $login-action-links-color-transparent-dark;
-// }
+// Body dark login actions
+.body-dark .form-transparent .login-actions a {
+  &:hover {
+    color: white;
+  }
+}
 
 // Body dark well typography
 .body-dark .form-transparent h1,
@@ -32,25 +41,7 @@
 .body-dark .form-transparent h4,
 .body-dark .form-transparent label,
 .body-dark .form-transparent p {
-  color: $type-color-transparent-dark;
-}
-
-// Body dark form field icon color
-.body-dark .form-transparent .form-field-icon {
-  color: $form-field-icon-color-transparent-dark;
-}
-
-// Body dark form transparent. Form field action color
-.body-dark .form-transparent .form-field input:focus,
-.body-dark .form-transparent .form-field input:valid,
-.body-dark .form-transparent .form-field textarea:focus,
-.body-dark .form-transparent .form-field textarea:valid {
-  color: $form-field-focus-color-transparent-dark;
-}
-
-// Body dark form transparent. Login symbol circle
-.body-light .form-transparent .login-symbol-circle {
-  background-color: white;
+  color: var(--color-light);
 }
 
 // Powered by Curity
@@ -59,5 +50,5 @@
 }
 
 .body-dark .form-transparent .login-powered-by-logo {
-  background-image: url("#{$imagePath}curity-logo-white.svg");
+  background-image: url("/../public/images/curity-logo-white.svg");
 }

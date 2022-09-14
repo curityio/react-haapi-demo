@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Curity AB. All rights reserved.
+ * Copyright (C) 2021 Curity AB. All rights reserved.
  *
  * The contents of this file are the property of Curity AB.
  * You may not copy or use this file, in either source code
@@ -9,286 +9,198 @@
  * For further information, please contact Curity AB.
  */
 
-/// Defines the colors for the default Curity Theme
-/// There are two modes, 'dark' and 'light'. This is controlled
-/// in the template settings and the CSS supports both modes
-/// without recompilation.
-/// Where there is a 'dark' version it has the suffix '-dark'.
-/// If no '-dark' version is present, the color needs no update.
-///
-$fontPath: "/../public/fonts/";
-$imagePath: "/../public/images/";
-
-// 2. Breakpoints. Using mobile first media querys using min-width.
-$breakpoint-sm: "(min-width: 40em)" !default;
-$breakpoint-md: "(min-width: 52em)" !default;
-$breakpoint-lg: "(min-width: 64em)" !default;
-$breakpoint-xlg: "(min-width: 74em)" !default;
-$breakpoint-xxlg: "(min-width: 84em)" !default;
-$breakpoint-xxxlg: "(min-width: 114em)" !default;
-
-// 3. Colors
-
-// 3.1 Primary color. The main color that is used
-$primary: #626c87 !default; // Curity Blue
-
-/// This color is used when accenting the primary color, ex during hover
-$primary-accent-color: #d859a1 !default;
-
-// 3.2 Call To Action colors
-$call-to-action-success: #57c75c !default; // Green
-$call-to-action-info: #d9edf7 !default; // Light blue
-$call-to-action-warning: #e0c01c !default; // Yellow
-$call-to-action-danger: #ca2e2b !default; // Red
-$call-to-action-add: #0092ff !default; // Blue
-
-// 3.3 Grey colors
-$grey: #a9a9a9 !default;
-$grey-dark: darken($grey, 30%) !default;
-$grey-light-5: lighten($grey, 5%) !default;
-$grey-light-10: lighten($grey, 10%) !default;
-$grey-light-15: lighten($grey, 15%) !default;
-$grey-light-20: lighten($grey, 20%) !default;
-$grey-light-25: lighten($grey, 25%) !default;
-$grey-light-30: lighten($grey, 30%) !default;
-
-/// 3.6 Text color for p and strong tags
-$paragraph-color: lighten(black, 45%) !default;
-$heading-color: lighten(black, 15%) !default;
-$strong-color: $primary;
-
-/// General text color when using a dark background theme and a transparent form
-$type-color-transparent-dark: white;
-
-/// 3.7. Link colors
-/// Main link color
-$link-color: $primary !default;
-
-/// Main link hover color
-$link-color-hover: darken($primary-accent-color, 20%) !default;
-
-/// Main link hover color
-$link-color-visited: $primary !default;
-
-/// Color of links in the login form such as forgot password etc.
-/// Theme: Dark
-/// Form: Transparent
-$login-action-links-color-transparent-dark: lighten($primary, 30%);
-
-/// 3.8 Authenticator colors
-$authenticator-google-color: #4285f4;
-$authenticator-pingfederate-color: #002050;
-$authenticator-email-color: grey;
-$authenticator-oidc-color: #f78c40;
-$authenticator-group-color: green;
-$authenticator-encap-color: #fbb034;
-$authenticator-windows-color: #0078d7;
-$authenticator-siths-color: #008272;
-$authenticator-facebook-color: #3b5998;
-$authenticator-twitter-color: #0077b5;
-$authenticator-linkedin-color: #0077b5;
-$authenticator-sms-color: #70b29c;
-$authenticator-html-form-color: #626c87;
-$authenticator-saml-color: #666;
-$authenticator-totp-color: #4682b4;
-$authenticator-github-color: #333;
-$authenticator-twitter-color: #1da1f2;
-$authenticator-bankid-color: #235971;
-$authenticator-dropbox-color: #007ee5;
-$authenticator-aws-color: #ff9900;
-$authenticator-salesforce-color: #1798c1;
-$authenticator-windowslive-color: #d83b01;
-$authenticator-slack-color: #6ecadc;
-$authenticator-box-color: #0061d5;
-$authenticator-bitbucket-color: #205081;
-$authenticator-instagram-color: #c13584;
-$authenticator-signicat-color: #212831;
-$authenticator-stackexchange-color: #1e5397;
-$authenticator-criipto-color: #edb0ab;
-$authenticator-freja-color: #48429e;
-$authenticator-cgi-color: #c03;
-$authenticator-duo-color: #6dc04f;
-
-// 3.9. Page Background color
-$background-color: lighten($grey, 30%) !default;
-$background-color-dark: darken($primary, 20%) !default;
-
-// 4 Button settings
-$button-line-height: 1.625rem !default;
-$button-padding-y: 0.5rem !default;
-$button-padding-x: 1rem !default;
-$button-border-radius: 4px !default;
-
-/// Forms
-/// Color used for form fields when field is not in focus
-$form-field-color: $primary !default;
-
-/// Color used for form input text when field is in focus and theme is dark with transparent form
-/// Theme: Dark
-/// Form: Transparent
-$form-field-focus-color-transparent-dark: $primary;
-
-/// Used when focusing on a text field as the higlighting border
-$form-field-focus-border-color: rgba($primary, 0.85);
-
-/// Used when enabling placeholder texts in text fields as the font-color
-$form-field-placeholder-color: $grey;
-
-/// Used when using the non-transparent light mode for login.
-/// It controls the login box background color
-$form-background-color: white;
-
-$form-field-height: 2.55rem !default;
-$form-field-padding: 0.75rem !default;
-$form-field-font-size: 1rem !default;
-
-/// The color of the icon inside the form field when the form field
-$form-field-icon-color: lighten($primary, 30%);
-$form-field-icon-color-transparent-dark: lighten($primary, 20%);
-
-/// The color of the icon inside the form field when the form field when the field is in focus
-$form-field-icon-focus-color: $primary;
-
-// Curity components.
-// Must be imported.
-@import "curity-application";
-
-// Overrides. Most commonly used customizations.
-
-// Light body background class.
-.body-light {
+// Theme variables
+// 1. Page
+// The main page that contains the login well.
+:root {
+  --page-background-image-url: none;
+  --page-background-image-gradient: none;
+  --page-background-position: center center;
+  --page-background-repeat: no-repeat;
+  --page-background-size: cover;
+  --page-background-color: #f3f5f7;
+  --page-background-color-dark: #3a445e;
+  --page-powered-by-display: flex; // Set to none to hide
 }
 
-// Dark body background class
-.body-dark {
+// 2 Well
+// The main area with the forms
+:root {
+  --well-border-color: transparent;
+  --well-background-color: white;
+  --well-border-radius: 26px;
+  --well-border-style: solid;
+  --well-border-width: 1px;
+  --well-box-shadow: rgb(0 0 0 / 5%) 0 6px 24px 0, rgb(0 0 0 / 8%) 0 0 0 1px;
 }
 
-// Form background-color light. White background on form container.
-.form-light {
+// 3 Login symbol
+:root {
+  --login-symbol-display: block; // Set to none to hide
+  --login-symbol-size: 180px;
+  --login-symbol-margin-top: 2rem;
+  --login-symbol-margin-bottom: 2rem;
+  --login-symbol-border-radius: 50%;
 }
 
-// Form background-color transparent.
-.form-transparent {
+// 4 Login logo
+:root {
+  --login-logo-display: block; // Set to none to hide
+  --login-logo-max-width: 200px;
+  --login-logo-max-height: 40px;
 }
 
-// Base button
-.button {
+// 5. Colors
+:root {
+  --color-text: #737373;
+  --color-heading: #262c3d;
+  --color-light: white;
+  --color-primary: #323c53;
+  --color-primary-dark: #262c3d;
+  --color-primary-medium: #3c4764;
+  --color-primary-light: #7e89a8;
+  --color-success: #57c75c;
+  --color-info: #62818f;
+  --color-danger: #ca2e2b;
+  --color-warning: #e0c01c;
+  --color-add: #0092ff;
+  --color-spot: #d859a1;
+  --color-link: #d859a1;
+  --color-link-hover: #87148b;
 }
 
-// Button hover
-.button:hover {
+// 6. Forms
+:root {
+  --form-label-color: #666;
+  --form-label-line-height: 2;
+  --form-label-font-size: calc(var(--type-base-size) * 0.85);
+  --form-field-disabled-background-color: rgb(0 0 0 / 12.5%);
+  --form-field-disabled-opacity: 0.5;
+  --form-field-readonly-background-color: rgb(0 0 0 / 12.5%);
+  --form-field-background-color: white;
+  --form-field-background-color-dark: var(--color-primary-dark);
+  --form-field-placeholder-color: rgb(141 141 141);
+  --form-field-border-color: rgb(207 217 224);
+  --form-field-box-shadow: none;
+  --form-field-box-shadow-focus: rgb(152 203 255) 0 0 0 3px;
+  --form-field-border-color-focus: rgb(0 89 200);
+  --form-field-height: 2.55rem;
+  --form-field-padding: 0.75rem;
+  --form-field-padding-left: 0.75rem;
+  --form-field-icon-display: none;
+  --form-field-icon-color: #ccc;
+  --form-field-icon-size: 1.5rem;
+  --form-field-border-radius: 8px;
+  --form-field-border-style: solid;
+  --form-field-border-width: 1px;
+  --form-field-border-color: #cfd9e0;
+  --form-field-border-color-hover: rgb(152, 152, 153);
+  --form-field-border-color-dark: var(--color-primary-dark);
+  --form-field-caret-color: var(--color-primary);
 }
 
-// Logo
-.login-logo {
+// 7. Typography
+// The font stacks can be native system fonts, or web fonts. If web fonts is used the fonts need to be setup in the css using @font-face
+:root {
+  --type-sans:
+    "Roboto-Regular",
+    system,
+    -apple-system,
+    "Roboto",
+    "Segoe UI",
+    "Lucida Grande",
+    sans-serif;
+  --type-weight: normal;
+  --type-sans-bold:
+    "Roboto-Medium",
+    system,
+    -apple-system,
+    "Roboto",
+    "Segoe UI",
+    "Lucida Grande",
+    sans-serif;
+  --type-weight-bold: normal;
+  --type-mono: "SF Mono", consolas, monaco, "Courier New", courier, monospace;
+  --type-line-height: 1.5;
+  --type-base-size: 1rem;
 }
 
-// Login symbol
-.login-symbol {
+// 8. Spacing
+// Space between elements and components. Can be relative units like rem, ems but also pixels (px)
+:root {
+  --space-1: 0.5rem;
+  --space-2: calc(var(--space-1) * 2);
+  --space-3: calc(var(--space-1) * 4);
+  --space-4: calc(var(--space-1) * 8);
 }
 
-// TODO: Move
-
-body {
-  height: 100%;
-  min-height: 100vh;
+// 9. Progress bar
+:root {
+  --progress-bar-height: 6px;
+  --progress-bar-border-radius: 6px;
 }
 
-#root > div {
-  min-height: 100vh;
+// 10. Buttons
+:root {
+  --button-padding-y: 0.6rem;
+  --button-padding-x: 1rem;
+  --button-border-radius: 8px;
+  --button-font-size: calc(var(--type-base-size));
+  --button-color: var(--color-primary);
+  --button-color-hover: var(--color-primary-dark);
 }
 
-main {
-  display: flex;
-  flex-direction: column;
-  //height: 100vh;
-  align-items: center;
-  justify-content: center;
+// 11 Authenticator colors
+:root {
+  --authenticator-google-color: #4285f4;
+  --authenticator-pingfederate-color: #bc1f27;
+  --authenticator-email-color: grey;
+  --authenticator-oidc-color: #f78c40;
+  --authenticator-group-color: green;
+  --authenticator-encap-color: #fbb034;
+  --authenticator-windows-color: #0078d7;
+  --authenticator-siths-color: #008272;
+  --authenticator-facebook-color: #3b5998;
+  --authenticator-linkedin-color: #0077b5;
+  --authenticator-sms-color: #70b29c;
+  --authenticator-html-form-color: #626c87;
+  --authenticator-saml-color: #666;
+  --authenticator-totp-color: #4682b4;
+  --authenticator-github-color: #333;
+  --authenticator-twitter-color: #1da1f2;
+  --authenticator-bankid-color: #235971;
+  --authenticator-dropbox-color: #007ee5;
+  --authenticator-aws-color: #f90;
+  --authenticator-salesforce-color: #1798c1;
+  --authenticator-windows-live-color: #d83b01;
+  --authenticator-slack-color: #6ecadc;
+  --authenticator-box-color: #0061d5;
+  --authenticator-bitbucket-color: #205081;
+  --authenticator-instagram-color: #c13584;
+  --authenticator-signicat-color: #212831;
+  --authenticator-stackexchange-color: #1e5397;
+  --authenticator-criipto-color: #edb0ab;
+  --authenticator-freja-eid-color: #48429e;
+  --authenticator-cgi-color: #c03;
+  --authenticator-duo-color: #6dc04f;
+  --authenticator-sign-in-with-apple-color: #000;
+  --authenticator-social-single-color: var(--color-primary);
+  --authenticator-username-color: var(--color-primary);
+  --authenticator-netidaccess-os-color: #000;
 }
 
-.login-well .form {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-
-  @media #{$breakpoint-sm} {
-    padding-bottom: 2.5rem;
-    padding-left: 2.5rem;
-    padding-right: 2.5rem;
-  }
+// 12 Alerts
+:root {
+  --alert-border-radius: 8px;
+  --alert-border-style: solid;
+  --alert-border-width: 1px;
+  --alert-border-color: #cfd9e0;
 }
 
-.login-well .error {
-  padding-top: 1rem;
-  padding-bottom: 0rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-
-  @media #{$breakpoint-sm} {
-    // padding-bottom: 2.5rem;
-    padding-left: 2.5rem;
-    padding-right: 2.5rem;
-  }
-}
-
-header a:not(.button) {
-  color: lighten($primary, 20%);
-}
-
-header a:not(.button):hover {
-  color: white;
-  text-decoration: none;
-  transition: color 400ms ease;
-}
-
-header a:not(.button):focus {
-  text-decoration: none;
-  color: white;
-}
-
-header a:not(.button).active {
-  color: white;
-}
-
-.alert-enter {
-  opacity: 0;
-  transform: scale(0.9);
-}
-
-.alert-enter-active {
-  opacity: 1;
-  transform: translateX(0);
-  transition: opacity 300ms, transform 300ms;
-}
-
-.alert-exit {
-  opacity: 1;
-}
-
-.alert-exit-active {
-  opacity: 0;
-  transform: scale(0.9);
-  transition: opacity 300ms, transform 300ms;
-}
-
-.fade-in {
-  animation-name: fadeIn;
-  animation-duration: 0.5s;
-  animation-fill-mode: both;
-}
-
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-    transform: translateX(-50px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-.login-well {
-  overflow-x: hidden;
+// 13 Done checkmark
+:root {
+  --done-checkmark-container-size: 100px;
+  --done-checkmark-size: 80px;
+  --done-checkmark-line-color: var(--color-success);
+  --done-checkmark-circle-color: var(--color-success);
 }

@@ -1,92 +1,54 @@
-/*
- * Copyright (C) 2016 Curity AB. All rights reserved.
- *
- * The contents of this file are the property of Curity AB.
- * You may not copy or use this file, in either source code
- * or executable form, except in compliance with terms
- * set by Curity AB.
- *
- * For further information, please contact Curity AB.
- */
-
-/*-------------------------------------------------------------------
-Button base
--------------------------------------------------------------------*/
 button,
 a.button,
 .button {
-  -webkit-font-smoothing: antialiased;
-  transition: background-color 300ms ease, box-shadow 150ms ease;
-  border-radius: $button-border-radius;
-  background: $primary;
-  font-weight: 400;
-  color: white;
+  background-color: var(--button-color);
   border: none;
+  border-radius: var(--button-border-radius);
   cursor: pointer;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1em;
-  line-height: $button-line-height * 1.15;
-  padding: ($button-padding-y * 1.15) ($button-padding-x * 1.15);
-  font-family: "Roboto-Medium";
-  -moz-osx-font-smoothing: grayscale;
-  text-decoration: none;
-  white-space: normal;
-
-  @media #{$breakpoint-sm} {
-    font-size: 1.15em;
-  }
+  display: inline-block;
+  font-family: var(--type-sans-bold);
+  font-size: var(--button-font-size);
+  -webkit-font-smoothing: antialiased;
+  font-weight: var(--type-weight-bold);
+  line-height: normal;
+  padding:
+    calc(var(--button-padding-y) * 1.25)
+    calc(var(--button-padding-x) * 1.25);
+  transition:
+    background-color 200ms,
+    transform 200ms,
+    color 200ms,
+    box-shadow 200ms,
+    border-color 200ms;
+  color: white;
 
   &:hover {
-    background: darken($primary, 10%);
+    background-color: var(--button-color-hover);
     text-decoration: none;
   }
 
-  &:hover,
-  &:active {
-    color: white;
-  }
-
+  &:active,
   &:focus {
+    border-color: var(--form-field-border-color-focus);
+    box-shadow: var(--form-field-box-shadow-focus);
     outline: none;
-    border-color: rgba(lighten($primary, 20%), 0.5);
-    box-shadow: 0 0 0 3px rgba(lighten($primary, 20%), 0.5);
   }
 }
 
-/*-------------------------------------------------------------------
-Colors
--------------------------------------------------------------------*/
+.login-well.form-transparent {
+  --button-color: #576487;
+  --button-color-hover: #4a5675;
+}
+
+a.button-primary,
 .button-primary {
-  background: $primary;
-}
-
-.button-grey {
-  background: $grey;
-}
-
-.button-light-grey {
-  background: $grey-light-15;
+  background-color: var(--button-color);
+  border: 1px solid var(--button-color);
   color: white;
 
   &:hover,
   &:active {
-    box-shadow: none;
-    background: $grey-light-5;
-    color: white;
-  }
-}
-
-.button-grey-outline {
-  background: none;
-  border: 1px solid $grey;
-  color: $grey-dark;
-
-  &:hover,
-  &:active {
-    box-shadow: none;
-    background: $grey-dark;
+    background-color: var(--button-color-hover);
     color: white;
   }
 }
@@ -94,721 +56,428 @@ Colors
 a.button-primary-outline,
 .button-primary-outline {
   background: none;
-  border: 1px solid lighten($primary, 10%);
-  color: lighten($primary, 10%);
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary);
 
   &:hover,
   &:active {
-    box-shadow: none;
-    background: lighten($primary, 20%);
+    background: var(--color-primary);
     color: white;
   }
 }
 
-/*-------------------------------------------------------------------
-Call to action
--------------------------------------------------------------------*/
+.body-dark .form-transparent {
+  a.button-primary-outline,
+  .button-primary-outline {
+    border: 1px solid var(--color-light);
+    color: var(--color-light);
+  }
+}
 
 a.button-warning,
 .button-warning {
-  background-color: darken($call-to-action-warning, 25%);
+  background-color: var(--color-warning);
+  border: 1px solid var(--color-warning);
 
   &:hover,
   &:active {
-    box-shadow: none;
-    background: darken($call-to-action-warning, 35%);
+    background: var(--color-warning);
     color: white;
   }
 }
 
 a.button-danger,
 .button-danger {
-  background-color: lighten($call-to-action-danger, 15%);
+  background-color: var(--color-danger);
+  border: 1px solid var(--color-danger);
 
   &:hover,
   &:active {
-    box-shadow: none;
-    background: lighten($call-to-action-danger, 5%);
-    color: white;
-  }
-}
-
-a.button-success,
-.button-success {
-  background-color: lighten($call-to-action-success, 10%);
-
-  &:hover,
-  &:active {
-    box-shadow: none;
-    background: lighten($call-to-action-success, 0%);
-    color: white;
-  }
-}
-
-a.button-info,
-.button-info {
-  background-color: darken($call-to-action-info, 20%);
-
-  &:hover,
-  &:active {
-    box-shadow: none;
-    background: darken($call-to-action-info, 30%);
-    color: white;
-  }
-}
-
-a.button-info-outline,
-.button-info-outline {
-  background: none;
-  border: 1px solid darken($call-to-action-info, 20%);
-  color: darken($call-to-action-info, 20%);
-
-  &:hover,
-  &:active {
-    box-shadow: none;
-    background: darken($call-to-action-info, 20%);
-    color: white;
-  }
-}
-
-a.button-warning-outline,
-.button-warning-outline {
-  background: none;
-  border: 1px solid darken($call-to-action-warning, 45%);
-  color: darken($call-to-action-warning, 45%);
-
-  &:hover,
-  &:active {
-    box-shadow: none;
-    background: darken($call-to-action-warning, 45%);
+    background: var(--color-danger);
     color: white;
   }
 }
 
 a.button-danger-outline,
 .button-danger-outline {
-  background: none;
-  border: 1px solid $call-to-action-danger;
-  color: $call-to-action-danger;
+  background-color: transparent;
+  border: 1px solid var(--color-danger);
+  color: var(--color-danger);
 
   &:hover,
   &:active {
-    box-shadow: none;
-    background: $call-to-action-danger;
+    background: var(--color-danger);
     color: white;
   }
 }
 
-a.button-success-outline,
-.button-success-outline {
-  background: none;
-  border: 1px solid $call-to-action-success;
-  color: $call-to-action-success;
+a.button-success,
+.button-success {
+  background-color: var(--color-success);
+  border: 1px solid var(--color-success);
 
   &:hover,
   &:active {
-    box-shadow: none;
-    background: $call-to-action-success;
+    background: var(--color-success);
     color: white;
   }
 }
 
-/*-------------------------------------------------------------------
-Sizes
--------------------------------------------------------------------*/
+a.button-info,
+.button-info {
+  background-color: var(--color-info);
+  border: 1px solid var(--color-info);
 
-a.button-xtiny,
-.button-xtiny {
-  font-size: 0.6em;
-  min-height: 24px;
-  @media #{$breakpoint-md} {
-    font-size: 0.6em;
-  }
-  padding: 0.1rem 0.75rem;
-  .icon {
-    font-size: 0.75rem;
+  &:hover,
+  &:active {
+    background: var(--color-info);
+    color: white;
   }
 }
 
 a.button-tiny,
 .button-tiny {
   font-size: 0.85em;
-  min-height: 32px;
+  line-height: calc(var(--button-line-height) * 0.75);
+  min-height: 24px;
+  padding:
+    calc(var(--button-padding-y) * 0.65)
+    calc(var(--button-padding-x) * 1);
+
   @media #{$breakpoint-md} {
-    font-size: 0.8em;
+    font-size: 0.85em;
+    min-height: 24px;
   }
-  padding: 0.25rem 0.75rem;
 }
 
 a.button-small,
 .button-small {
   font-size: 0.85em;
+  line-height: calc(var(--button-line-height) * 1.1);
   min-height: 34px;
+  padding:
+    calc(var(--button-padding-y) * 0.85)
+    calc(var(--button-padding-x) * 1);
+
   @media #{$breakpoint-md} {
-    font-size: 0.8em;
-    min-height: 36px;
+    font-size: 0.85em;
+    min-height: 34px;
   }
-  line-height: ($button-line-height * 1.1);
-  padding: ($button-padding-y * 1) ($button-padding-x * 1.25);
 }
 
 a.button-medium,
 .button-medium {
+  font-size: 1.2em;
+  line-height: calc(var(--button-line-height) * 1.3);
   min-height: 40px;
-  font-size: 0.95em;
   min-height: 44px;
+  padding:
+    calc(var(--button-padding-y) * 1.15)
+    calc(var(--button-padding-x) * 1.5);
+
   @media #{$breakpoint-md} {
-    font-size: 1em;
+    font-size: 1.1em;
   }
-  line-height: ($button-line-height * 1.3);
-  padding: ($button-padding-y * 1.15) ($button-padding-x * 1.5);
 }
 
 a.button-large,
 .button-large {
   font-size: 1.25em;
+  line-height: calc(var(--button-line-height) * 2);
   min-height: 58px;
+  padding:
+    calc(var(--button-padding-y) * 1.25)
+    calc(var(--button-padding-x) * 1.75);
+
   @media #{$breakpoint-md} {
     font-size: 1.6em;
   }
-  line-height: ($button-line-height * 2);
-  padding: ($button-padding-y * 1.25) ($button-padding-x * 1.75);
 }
 
-/*-------------------------------------------------------------------
-Variants
--------------------------------------------------------------------*/
 .button-transparent {
   background-color: transparent;
 }
 
+.btn {
+  @extend .button;
+  @extend .button-primary-outline;
+  @extend .button-fullwidth;
+}
+
 .button-fullwidth {
-  width: 100%;
   text-align: center;
+  width: 100%;
 }
 
-.button-center {
-  max-width: 200px;
-  margin: 0 auto;
-  display: block;
-}
-
-// When placing ex right to a input text,email,search
-.button-inputgroup {
-  border-radius: 0 1px 1px 0;
-  padding: inherit;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-  background-color: $primary;
-}
-
-// Social buttons
-// button[type="submit"].button-social,
-// button.button-social,
+button[type="submit"].button-social,
+button.button-social,
 a.button-social,
 .button-social {
-  text-align: left;
-  justify-content: flex-start;
+  border: none;
+  margin: 0;
   padding-left: 80px;
-  margin-top: 0;
+  text-align: left;
   background-color: transparent;
-  border: 1px solid #ccc;
-  color: #666;
-  &:active {
-    color: #666;
-  }
+  border-width: var(--form-field-border-width);
+  border-style: var(--form-field-border-style);
+  border-color: var(--form-field-border-color);
+  color: var(--color-heading);
+  transition:
+    background-color 200ms,
+    transform 200ms,
+    color 200ms,
+    box-shadow 200ms,
+    border-color 200ms;
 
   .icon {
-    background-color: darken($primary, 10%);
-    width: 65px;
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    display: flex;
-    justify-content: center;
     align-items: center;
-    border-top-left-radius: $button-border-radius;
-    border-bottom-left-radius: $button-border-radius;
-  }
-
-  &:hover {
-    background-color: transparent;
-    color: #666;
-  }
-
-  svg {
-    fill: white;
-    width: 1.5rem;
-    height: 1.5rem;
-  }
-}
-
-.body-dark .form-transparent a.button-social,
-.body-dark .form-transparent .button-social {
-  color: white;
-  &:active {
-    color: white;
-  }
-}
-
-a.button-google,
-.button-google {
-  .icon {
-    background-color: darken($authenticator-google-color, 10%);
-  }
-
-  &:hover {
-    background-color: transparent;
-    color: $authenticator-google-color;
-    border: 1px solid darken($authenticator-google-color, 10%);
-  }
-}
-
-a.button-pingfederate,
-.button-pingfederate {
-  .icon {
-    background-color: darken($authenticator-pingfederate-color, 10%);
-  }
-
-  &:hover {
-    background-color: transparent;
-    color: $authenticator-pingfederate-color;
-    border: 1px solid darken($authenticator-pingfederate-color, 10%);
-  }
-}
-
-a.button-email,
-.button-email {
-  .icon {
-    background-color: darken($authenticator-email-color, 10%);
-  }
-
-  &:hover {
-    background-color: transparent;
-    color: $authenticator-email-color;
-    border: 1px solid darken($authenticator-email-color, 10%);
-  }
-}
-
-a.button-oidc,
-.button-oidc {
-  .icon {
-    background-color: darken($authenticator-oidc-color, 10%);
-  }
-
-  &:hover {
-    background-color: transparent;
-    color: $authenticator-oidc-color;
-    border: 1px solid darken($authenticator-oidc-color, 10%);
-  }
-}
-
-a.button-group,
-.button-group {
-  .icon {
-    background-color: darken($authenticator-group-color, 10%);
-  }
-
-  &:hover {
-    background-color: transparent;
-    color: $authenticator-group-color;
-    border: 1px solid darken($authenticator-group-color, 10%);
-  }
-}
-
-a.button-encap,
-.button-encap {
-  .icon {
-    background-color: darken($authenticator-encap-color, 10%);
-  }
-
-  &:hover {
-    background-color: transparent;
-    color: $authenticator-encap-color;
-    border: 1px solid darken($authenticator-encap-color, 10%);
-  }
-}
-
-a.button-windows,
-.button-windows {
-  .icon {
-    background-color: darken($authenticator-windows-color, 10%);
-  }
-
-  &:hover {
-    background-color: transparent;
-    color: $authenticator-windows-color;
-    border: 1px solid darken($authenticator-windows-color, 10%);
-  }
-}
-
-a.button-siths,
-.button-siths {
-  .icon {
-    background-color: darken($authenticator-siths-color, 10%);
-  }
-
-  &:hover {
-    background-color: transparent;
-    color: $authenticator-siths-color;
-    border: 1px solid darken($authenticator-siths-color, 10%);
-  }
-}
-
-a.button-facebook,
-.button-facebook {
-  .icon {
-    background-color: darken($authenticator-facebook-color, 10%);
-  }
-
-  &:hover {
-    background-color: transparent;
-    color: $authenticator-facebook-color;
-    border: 1px solid darken($authenticator-facebook-color, 10%);
-  }
-}
-
-a.button-github,
-.button-github {
-  .icon {
-    background-color: darken($authenticator-github-color, 10%);
-  }
-
-  &:hover {
-    background-color: transparent;
-    color: $authenticator-github-color;
-    border: 1px solid darken($authenticator-github-color, 10%);
-  }
-}
-
-a.button-dropbox,
-.button-dropbox {
-  .icon {
-    background-color: darken($authenticator-dropbox-color, 10%);
-  }
-
-  &:hover {
-    background-color: transparent;
-    color: $authenticator-google-color;
-    border: 1px solid darken($authenticator-dropbox-color, 10%);
-  }
-}
-
-a.button-aws,
-.button-aws {
-  .icon {
-    background-color: darken($authenticator-aws-color, 10%);
-  }
-
-  &:hover {
-    background-color: transparent;
-    color: $authenticator-aws-color;
-    border: 1px solid darken($authenticator-aws-color, 10%);
-  }
-}
-
-a.button-salesforce,
-.button-salesforce {
-  .icon {
-    background-color: darken($authenticator-salesforce-color, 10%);
-  }
-
-  &:hover {
-    background-color: transparent;
-    color: $authenticator-salesforce-color;
-    border: 1px solid darken($authenticator-salesforce-color, 10%);
-  }
-}
-
-a.button-windows-live,
-.button-windows-live {
-  .icon {
-    background-color: darken($authenticator-windowslive-color, 10%);
-  }
-
-  &:hover {
-    background-color: transparent;
-    color: $authenticator-windowslive-color;
-    border: 1px solid darken($authenticator-windowslive-color, 10%);
-  }
-}
-
-a.button-slack,
-.button-slack {
-  .icon {
-    background-color: darken($authenticator-slack-color, 10%);
-  }
-
-  &:hover {
-    background-color: transparent;
-    color: $authenticator-slack-color;
-    border: 1px solid darken($authenticator-slack-color, 10%);
-  }
-}
-
-a.button-box,
-.button-box {
-  .icon {
-    background-color: darken($authenticator-box-color, 10%);
-  }
-
-  &:hover {
-    background-color: transparent;
-    color: $authenticator-box-color;
-    border: 1px solid darken($authenticator-box-color, 10%);
-  }
-}
-
-a.button-bitbucket,
-.button-bitbucket {
-  .icon {
-    background-color: darken($authenticator-bitbucket-color, 10%);
-  }
-
-  &:hover {
-    background-color: transparent;
-    color: $authenticator-bitbucket-color;
-    border: 1px solid darken($authenticator-bitbucket-color, 10%);
-  }
-}
-
-a.button-signicat,
-.button-signicat {
-  .icon {
-    background-color: darken($authenticator-signicat-color, 10%);
-  }
-
-  &:hover {
-    background-color: transparent;
-    color: $authenticator-signicat-color;
-    border: 1px solid darken($authenticator-signicat-color, 10%);
-  }
-}
-
-a.button-criipto,
-.button-criipto {
-  .icon {
-    background-color: darken($authenticator-criipto-color, 10%);
-  }
-
-  &:hover {
-    background-color: transparent;
-    color: $authenticator-criipto-color;
-    border: 1px solid darken($authenticator-criipto-color, 10%);
-  }
-}
-
-a.button-username,
-.button-username {
-  .icon {
-    background-color: darken($primary, 20%);
-  }
-
-  &:hover {
-    background-color: transparent;
-    color: $primary;
-    border: 1px solid darken($primary, 10%);
-  }
-}
-
-a.button-stackexchange,
-.button-stackexchange {
-  .icon {
-    background-color: darken($authenticator-stackexchange-color, 10%);
-  }
-
-  &:hover {
-    background-color: transparent;
-    color: $authenticator-stackexchange-color;
-    border: 1px solid darken($authenticator-stackexchange-color, 10%);
-  }
-}
-
-a.button-freja-eid,
-.button-freja-eid {
-  .icon {
-    background-color: darken($authenticator-freja-color, 10%);
-  }
-
-  &:hover {
-    background-color: transparent;
-    color: $authenticator-freja-color;
-    border: 1px solid darken($authenticator-freja-color, 10%);
-  }
-}
-
-a.button-cgi,
-.button-cgi {
-  .icon {
-    background-color: darken($authenticator-cgi-color, 10%);
-  }
-
-  &:hover {
-    background-color: transparent;
-    color: $authenticator-cgi-color;
-    border: 1px solid darken($authenticator-cgi-color, 10%);
-  }
-}
-
-a.button-instagram,
-.button-instagram {
-  .icon {
-    background-color: darken($authenticator-instagram-color, 10%);
-  }
-
-  &:hover {
-    background-color: transparent;
-    color: $authenticator-instagram-color;
-    border: 1px solid darken($authenticator-instagram-color, 10%);
-  }
-}
-
-a.button-twitter,
-.button-twitter {
-  .icon {
-    background-color: darken($authenticator-twitter-color, 20%);
-  }
-
-  &:hover {
-    background-color: transparent;
-    color: $authenticator-twitter-color;
-    border: 1px solid darken($authenticator-twitter-color, 10%);
-  }
-}
-
-a.button-linkedin,
-.button-linkedin {
-  .icon {
-    background-color: darken($authenticator-linkedin-color, 20%);
-  }
-
-  &:hover {
-    background-color: transparent;
-    color: $authenticator-linkedin-color;
-    border: 1px solid darken($authenticator-linkedin-color, 10%);
-  }
-}
-
-a.button-sms,
-.button-sms {
-  .icon {
-    background-color: darken($authenticator-sms-color, 10%);
+    background-color: var(--color-primary);
+    border-bottom-left-radius: var(--button-border-radius);
+    border-top-left-radius: var(--button-border-radius);
+    box-sizing: border-box;
+    display: inline-block;
+    display: flex;
+    font-size: 1.7rem;
+    height: 100%;
+    justify-content: center;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 60px;
     color: white;
   }
 
   &:hover {
     background-color: transparent;
-    color: $authenticator-sms-color;
-    border: 1px solid darken($authenticator-sms-color, 10%);
+    color: var(--color-heading);
+    border-color: var(--form-field-border-color-hover);
   }
 }
 
-a.button-html-form,
-.button-html-form {
+button[type="submit"].button-social-icon,
+button.button-social-icon,
+a.button-social-icon,
+.button-social-icon {
+  overflow: hidden;
+  border: none;
+
   .icon {
-    background-color: darken($authenticator-html-form-color, 10%);
+    border-top-right-radius: var(--button-border-radius);
+    border-bottom-right-radius: var(--button-border-radius);
+  }
+}
+
+.body-dark .form-transparent {
+  button[type="submit"].button-social,
+  button.button-social,
+  a.button-social,
+  .button-social {
     color: white;
-  }
-
-  &:hover {
-    background-color: transparent;
-    color: $authenticator-html-form-color;
-    border: 1px solid darken($authenticator-html-form-color, 10%);
+    border-width: 0;
+    background-color: var(--form-field-background-color-dark);
   }
 }
 
-a.button-totp,
-.button-totp {
-  .icon {
-    background-color: darken($authenticator-totp-color, 10%);
-    color: white;
-  }
-
-  &:hover {
-    background-color: transparent;
-    color: $authenticator-totp-color;
-    border: 1px solid darken($authenticator-totp-color, 10%);
-  }
+button.button-social.button-google .icon,
+.button-social.button-google .icon {
+  background-color: var(--authenticator-google-color);
 }
 
-a.button-saml,
-.button-saml {
-  .icon {
-    background-color: darken($authenticator-saml-color, 10%);
-    color: white;
-  }
-
-  &:hover {
-    background-color: transparent;
-    color: $authenticator-saml-color;
-    border: 1px solid darken($authenticator-saml-color, 10%);
-  }
+button.button-social.button-pingfederate .icon,
+.button-social.button-pingfederate .icon {
+  background-color: var(--authenticator-pingfederate-color);
 }
 
-a.button-bankid,
-.button-bankid {
-  .icon {
-    background-color: darken($authenticator-bankid-color, 5%);
-  }
-
-  &:hover {
-    background-color: transparent;
-    color: $authenticator-bankid-color;
-    border: 1px solid darken($authenticator-bankid-color, 10%);
-  }
+button.button-social.button-email .icon,
+.button-social.button-email .icon {
+  background-color: var(--authenticator-email-color);
 }
 
-a.button-duo,
-.button-duo {
-  .icon {
-    background-color: darken($authenticator-duo-color, 5%);
-  }
-
-  &:hover {
-    background-color: transparent;
-    color: $authenticator-duo-color;
-    border: 1px solid darken($authenticator-duo-color, 10%);
-  }
+button.button-social.button-oidc .icon,
+.button-social.button-oidc .icon {
+  background-color: var(--authenticator-oidc-color);
 }
 
-// Single color icons
-.button-social.button-social-single-color {
-  background-color: $primary;
-  .icon {
-    background-color: darken($primary, 10%);
-  }
-  &:hover {
-    background-color: darken($primary, 5%);
-  }
+button.button-social.button-group .icon,
+.button-social.button-group .icon {
+  background-color: var(--authenticator-group-color);
 }
 
-// Only icon version
+button.button-social.button-encap .icon,
+.button-social.button-encap .icon {
+  background-color: var(--authenticator-encap-color);
+}
+
+button.button-social.button-windows .icon,
+.button-social.button-windows .icon {
+  background-color: var(--authenticator-windows-color);
+}
+
+button.button-social.button-siths .icon,
+.button-social.button-siths .icon {
+  background-color: var(--authenticator-siths-color);
+}
+
+button.button-social.button-facebook .icon,
+.button-social.button-facebook .icon {
+  background-color: var(--authenticator-facebook-color);
+}
+
+button.button-social.button-github .icon,
+.button-social.button-github .icon {
+  background-color: var(--authenticator-github-color);
+}
+
+button.button-social.button-dropbox .icon,
+.button-social.button-dropbox .icon {
+  background-color: var(--authenticator-dropbox-color);
+}
+
+button.button-social.button-aws .icon,
+.button-social.button-aws .icon {
+  background-color: var(--authenticator-aws-color);
+}
+
+button.button-social.button-salesforce .icon,
+.button-social.button-salesforce .icon {
+  background-color: var(--authenticator-salesforce-color);
+}
+
+button.button-social.button-windows-live .icon,
+.button-social.button-windows-live .icon {
+  background-color: var(--authenticator-windows-live-color);
+}
+
+button.button-social.button-slack .icon,
+.button-social.button-slack .icon {
+  background-color: var(--authenticator-slack-color);
+}
+
+button.button-social.button-box .icon,
+.button-social.button-box .icon {
+  background-color: var(--authenticator-box-color);
+}
+
+button.button-social.button-bitbucket .icon,
+.button-social.button-bitbucket .icon {
+  background-color: var(--authenticator-bitbucket-color);
+}
+
+button.button-social.button-signicat .icon,
+.button-social.button-signicat .icon {
+  background-color: var(--authenticator-signicat-color);
+}
+
+button.button-social.button-criipto .icon,
+.button-social.button-criipto .icon {
+  background-color: var(--authenticator-criipto-color);
+}
+
+button.button-social.button-username .icon,
+.button-social.button-username .icon {
+  background-color: var(--authenticator-username-color);
+}
+
+button.button-social.button-stackexchange .icon,
+.button-social.button-stackexchange .icon {
+  background-color: var(--authenticator-stackexchange-color);
+}
+
+button.button-social.button-freja-eid .icon,
+.button-social.button-freja-eid .icon {
+  background-color: var(--authenticator-freja-eid-color);
+}
+
+button.button-social.button-cgi .icon,
+.button-social.button-cgi .icon {
+  background-color: var(--authenticator-cgi-color);
+}
+
+button.button-social.button-instagram .icon,
+.button-social.button-instagram .icon {
+  background-color: var(--authenticator-instagram-color);
+}
+
+button.button-social.button-twitter .icon,
+.button-social.button-twitter .icon {
+  background-color: var(--authenticator-twitter-color);
+}
+
+button.button-social.button-linkedin .icon,
+.button-social.button-linkedin .icon {
+  background-color: var(--authenticator-linkedin-color);
+}
+
+button.button-social.button-sms .icon,
+.button-social.button-sms .icon {
+  background-color: var(--authenticator-sms-color);
+}
+
+button.button-social.button-html-form .icon,
+.button-social.button-html-form .icon {
+  background-color: var(--authenticator-html-form-color);
+}
+
+button.button-social.button-totp .icon,
+.button-social.button-totp .icon {
+  background-color: var(--authenticator-totp-color);
+}
+
+button.button-social.button-saml .icon,
+.button-social.button-saml .icon {
+  background-color: var(--authenticator-saml-color);
+}
+
+button.button-social.button-bankid .icon,
+.button-social.button-bankid .icon {
+  background-color: var(--authenticator-bankid-color);
+}
+
+button.button-social.button-duo .icon,
+.button-social.button-duo .icon {
+  background-color: var(--authenticator-duo-color);
+}
+
+button.button-social.button-sign-in-with-apple .icon,
+.button-social.button-sign-in-with-apple .icon {
+  background-color: var(--authenticator-sign-in-with-apple-color);
+}
+
+button.button-social.button-netidaccess-os .icon,
+.button-social.button-netidaccess-os .icon {
+  background-color: var(--authenticator-netidaccess-os-color);
+}
+
+button.button-social.button-social-single-color .icon,
+.button-social.button-social-single-color .icon {
+  background-color: var(--authenticator-social-single-color);
+}
+
 .form-field-social-icon {
   display: inline-block;
-  width: 50px;
   height: 50px;
   margin-right: 0.5rem;
+  width: 50px;
 
   a {
-    position: relative;
     height: 100%;
+    position: relative;
   }
 }
 
 .button.button-social-icon {
+  align-items: center;
   display: block;
   padding-left: inherit;
-  align-items: center;
 }
 
 .button-social.button-social-icon .icon,
 .button-social.button-social-icon.button-bankid .ion-bankid {
-  width: 100%;
-  font-size: 1.95rem;
-  display: inline-flex;
-  justify-content: center;
   align-items: center;
+  display: inline-flex;
+  font-size: 1.95rem;
+  justify-content: center;
+  width: 100%;
 }
 
 .button-social.button-social-icon.button-bankid .ion-bankid {
@@ -817,11 +486,11 @@ a.button-duo,
 
 .button-social.button-social-icon .icon,
 .button-social.button-social-icon.button-google .ion-google {
-  width: 100%;
-  font-size: 1.95rem;
-  display: inline-flex;
-  justify-content: center;
   align-items: center;
+  display: inline-flex;
+  font-size: 1.95rem;
+  justify-content: center;
+  width: 100%;
 }
 
 .button-social.button-social-icon.button-google .ion-google {
@@ -836,10 +505,31 @@ a.button[disabled],
 button:disabled,
 button[disabled="disabled"],
 button[disabled] {
-  pointer-events: none;
   filter: grayscale(100%);
   opacity: 0.5;
+  pointer-events: none;
   user-select: none;
+}
+
+button.button-link,
+.button-link {
+  background-color: transparent;
+  color: var(--color-primary);
+
+  &:focus,
+  &:active {
+    background-color: transparent;
+    color: var(--color-primary);
+  }
+
+  &:hover {
+    background-color: #f6f6f6;
+    color: var(--color-primary);
+  }
+
+  body.body-dark .form-transparent &  {
+    background-color: white;
+  }
 }
 
 a.button-loading,

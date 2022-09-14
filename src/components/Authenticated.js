@@ -14,35 +14,62 @@
  *  limitations under the License.
  */
 
-import React from 'react'
+import React from "react";
 import Heading from "../ui-kit/ui-components/Heading";
-import {prettyPrintJson} from "pretty-print-json";
+import { prettyPrintJson } from "pretty-print-json";
+
+/* UI Components */
+import { Layout, Page, Well, Logo, Checkmark } from "../ui-kit/ui-components";
 
 export default function Authenticated(props) {
+  const decodeToken = (idToken) => {
+    const dataPart = idToken.split(".")[1];
+    return JSON.parse(atob(dataPart));
+  };
 
-    const decodeToken = (idToken) => {
-        const dataPart = idToken.split('.')[1]
-        return JSON.parse(atob(dataPart))
+  const getSubject = (idToken) => {
+    if (!idToken) {
+      return null;
     }
 
-    const getSubject = (idToken) => {
-        if (!idToken) {
-            return null
-        }
+    return decodeToken(idToken).sub;
+  };
 
-        return decodeToken(idToken).sub
-    }
+  const { id_token, access_token, scope, expires_in } = props.tokens;
 
-    const { id_token, access_token, scope, expires_in } = props.tokens
+  return (
+    <Layout>
+      <Page>
+        <Well>
+          <Logo />
+          <Checkmark />
+          <Heading title={`Welcome ${getSubject(id_token)}!`} />
 
-    return (<div className="authenticated">
-        <Heading title={`Welcome ${getSubject(id_token)}`} />
-        <div className="left-align">
-            <p>Access Token: <strong>{access_token}</strong></p>
-            <p>Scopes: <strong>{scope}</strong></p>
-            <p>Access token expires in <strong>{expires_in}</strong> seconds</p>
-            <p>ID Token claims:</p>
-            <pre className="json-container" dangerouslySetInnerHTML={{ __html: prettyPrintJson.toHtml(decodeToken(id_token)) }} />
-        </div>
-    </div>)
+          <div className="example-app-settings active">
+            <img
+              src="/images/curity-api-react.svg"
+              className="py4 mx-auto block"
+              style={{ maxWidth: "300px" }}
+              alt="Curity HAAPI React Demo"
+            />
+            <h3>Access Token</h3>
+            <pre className="json-container">{access_token}</pre>
+            <h3>Scopes</h3>
+            <pre className="json-container">{scope}</pre>
+            <h3>Access token expires in (seconds)</h3>
+
+            <pre className="json-container">{expires_in}</pre>
+
+            <h3>ID Token claims</h3>
+            <pre
+              className="json-container"
+              dangerouslySetInnerHTML={{
+                __html: prettyPrintJson.toHtml(decodeToken(id_token)),
+              }}
+            />
+          </div>
+        </Well>
+      </Page>
+    </Layout>
+  );
 }

@@ -16,14 +16,31 @@
 
 import React from "react"
 
+import { theme } from "../../../settings.js"
+
 const Logo = () => {
+  const { logo, skin } = theme
+
+  console.log(logo)
   return (
-      <img
-        className="login-logo"
-        src="/images/curity-logo.svg"
-        alt="Logo"
-        role="presentation"
-      />
+    <>
+      {skin.loginFormBackground === "form-transparent" &&
+      skin.bodyBackground === "body-dark" ? (
+        <img
+          className="login-logo"
+          src={logo.logoWhitePath}
+          alt="Logo"
+          role="presentation"
+        />
+      ) : (
+        <img
+          className="login-logo"
+          src={logo.logoPath}
+          alt="Logo"
+          role="presentation"
+        />
+      )}
+    </>
   )
 }
 
