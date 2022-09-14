@@ -20,14 +20,14 @@ import React from "react";
 import { Layout, Page, Well, Logo } from "../ui-kit/ui-components";
 
 export default function RedirectStep(props) {
-  const { continueFlow } = props;
+  const { continueFlow, type } = props;
   return (
     <>
       <Layout>
         <Page>
           <Well>
             <Logo />
-            <h1>Redirect step</h1>
+            <h1>{type ? type : 'Redirect'} step</h1>
 
             <p>
               Normally, a user will not be able to see this step. Click

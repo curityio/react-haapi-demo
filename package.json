@@ -1,7 +1,7 @@
 {
   "name": "react-haapi-demo",
   "description": "A demo implementation of the Hypermedia Authentication API in a React app",
-  "license": "Apache-2.0",
+  "license": "See license information in LICENSE",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
