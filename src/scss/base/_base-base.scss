@@ -11,8 +11,8 @@
 
 * {
   &,
-  &:before,
-  &:after {
+  &::before,
+  &::after {
     box-sizing: border-box;
   }
 }
@@ -21,32 +21,22 @@ html {
   height: 100%;
 }
 
-html,
-body,
-#app,
-#app > div {
-  height: 100%;
-}
-
-.body {
-  min-height: 100vh;
-  position: relative;
-}
-
 body {
+  font-family: "Roboto-Regular", sans-serif;
+  font-size: var(--type-base-size);
+  -webkit-font-smoothing: antialiased;
+  font-weight: normal;
   min-height: 100%;
   position: relative;
-  font-size: 100%;
-  font-family: "Roboto-Regular", sans-serif;
-  font-weight: normal;
-  -webkit-font-smoothing: antialiased;
+  margin: 0;
 }
 
 .container {
+  margin: 0 auto;
   max-width: 74em;
   padding-left: 1rem;
   padding-right: 1rem;
-  margin: 0 auto;
+
   @media #{$breakpoint-md} {
     padding-left: 1.25em;
     padding-right: 1.25em;

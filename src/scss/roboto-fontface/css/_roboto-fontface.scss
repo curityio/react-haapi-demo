@@ -1,55 +1,23 @@
-//@font-face {
-//  font-family: "Roboto-Light";
-//  src: url("#{$fontPath}Roboto-Light.eot");
-//  src: local("Roboto Light"), local("Roboto-Light"),
-//    url("#{$fontPath}Roboto-Light.eot?#iefix") format("embedded-opentype"),
-//    url("#{$fontPath}Roboto-Light.woff2") format("woff2"),
-//    url("#{$fontPath}Roboto-Light.woff") format("woff"),
-//    url("#{$fontPath}Roboto-Light.ttf") format("truetype"),
-//    url("#{$fontPath}Roboto-Light.svg#Roboto") format("svg");
-//}
-
 @font-face {
-  font-family: "Roboto-Regular";
-  src: url("#{$fontPath}Roboto-Regular.eot");
-  src: local("Roboto Regular"), local("Roboto-Regular"),
-    url("#{$fontPath}Roboto-Regular.eot?#iefix") format("embedded-opentype"),
-    url("#{$fontPath}Roboto-Regular.woff2") format("woff2"),
-    url("#{$fontPath}Roboto-Regular.woff") format("woff"),
-    url("#{$fontPath}Roboto-Regular.ttf") format("truetype"),
-    url("#{$fontPath}Roboto-Regular.svg#Roboto") format("svg");
+  font-family: 'Roboto-Regular';
+  src:  url('#{$fontPath}Roboto-Regular.eot');
+  src:  local('Roboto Regular'),
+        local('Roboto-Regular'),
+        url('#{$fontPath}Roboto-Regular.eot?#iefix') format('embedded-opentype'),
+        url('#{$fontPath}Roboto-Regular.woff2') format('woff2'),
+        url('#{$fontPath}Roboto-Regular.woff') format('woff'),
+        url('#{$fontPath}Roboto-Regular.ttf') format('truetype'),
+        url('#{$fontPath}Roboto-Regular.svg#Roboto') format('svg');
 }
 
 @font-face {
-  font-family: "Roboto-Regular-Italic";
-  src: url("#{$fontPath}Roboto-RegularItalic.eot");
-  src: local("Roboto RegularItalic"), local("Roboto-RegularItalic"),
-    url("#{$fontPath}Roboto-RegularItalic.eot?#iefix")
-      format("embedded-opentype"),
-    url("#{$fontPath}Roboto-RegularItalic.woff2") format("woff2"),
-    url("#{$fontPath}Roboto-RegularItalic.woff") format("woff"),
-    url("#{$fontPath}Roboto-RegularItalic.ttf") format("truetype"),
-    url("#{$fontPath}Roboto-RegularItalic.svg#Roboto") format("svg");
-}
-
-@font-face {
-  font-family: "Roboto-Medium";
-  src: url("#{$fontPath}Roboto-Medium.eot");
-  src: local("Roboto Medium"), local("Roboto-Medium"),
-    url("#{$fontPath}Roboto-Medium.eot?#iefix") format("embedded-opentype"),
-    url("#{$fontPath}Roboto-Medium.woff2") format("woff2"),
-    url("#{$fontPath}Roboto-Medium.woff") format("woff"),
-    url("#{$fontPath}Roboto-Medium.ttf") format("truetype"),
-    url("#{$fontPath}Roboto-Medium.svg#Roboto") format("svg");
-}
-
-@font-face {
-  font-family: "Roboto-Bold";
-  src: url("#{$fontPath}Roboto-Bold.eot");
-  src: local("Roboto Bold"), local("Roboto-Bold"),
-    url("#{$fontPath}Roboto-Bold.eot?#iefix") format("embedded-opentype"),
-    url("#{$fontPath}Roboto-Bold.woff2") format("woff2"),
-    url("#{$fontPath}Roboto-Bold.woff") format("woff"),
-    url("#{$fontPath}Roboto-Bold.ttf") format("truetype"),
-    url("#{$fontPath}Roboto-Bold.svg#Roboto") format("svg");
+  font-family: 'Roboto-Medium';
+  src:  url('#{$fontPath}Roboto-Medium.eot');
+  src:  local('Roboto Medium'),
+        local('Roboto-Medium'),
+        url('#{$fontPath}Roboto-Medium.eot?#iefix') format('embedded-opentype'),
+        url('#{$fontPath}Roboto-Medium.woff2') format('woff2'),
+        url('#{$fontPath}Roboto-Medium.woff') format('woff'),
+        url('#{$fontPath}Roboto-Medium.ttf') format('truetype'),
+        url('#{$fontPath}Roboto-Medium.svg#Roboto') format('svg');
 }

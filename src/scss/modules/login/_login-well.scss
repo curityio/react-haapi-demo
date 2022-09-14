@@ -9,9 +9,24 @@
  * For further information, please contact Curity AB.
  */
 
-/*-------------------------------------------------------------------
+/* -------------------------------------------------------------------
 Login well
--------------------------------------------------------------------*/
+------------------------------------------------------------------- */
+// If form white is activated
+.login-well.form-light {
+  background-color: var(--well-background-color);
+  border-width: var(--well-border-width);
+  border-style: var(--well-border-style);
+  border-color: var(--well-border-color);
+  border-radius: var(--well-border-radius);
+  box-shadow: var(--well-box-shadow);
+}
+
+// If form transparent is activated
+.login-well.form-transparent {
+  background-color: transparent;
+}
+
 .login-well {
   max-width: 500px;
   margin: 0 auto;
@@ -23,6 +38,12 @@ Login well
 
   @media #{$breakpoint-sm} {
     margin-top: 6rem;
+  }
+}
+
+.body-logo-outside .login-well {
+  @media #{$breakpoint-sm} {
+    margin-top: 1rem;
   }
 }
 
@@ -60,15 +81,37 @@ Login well
 
 .login-well:not(.login-well-info) form,
 .login-well:not(.login-well-info) .area {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  &:not(form.no-top-padding) {
+    padding-top: 1rem;
+  }
+
+  &:not(form.no-bottom-padding) {
+    padding-bottom: 1rem;
+  }
+
   padding-left: 1rem;
   padding-right: 1rem;
 
   @media #{$breakpoint-sm} {
-    padding-bottom: 2.5rem;
+    &:not(form.no-bottom-padding) {
+      padding-bottom: 2.5rem;
+    }
+
     padding-left: 2.5rem;
     padding-right: 2.5rem;
+  }
+
+  &.no-padding {
+    padding: 0;
+  }
+}
+
+.login-well form.manuallink:not([name="cancel"]) {
+  padding-bottom: 0;
+  @media #{$breakpoint-sm} {
+    &:not(form.no-bottom-padding) {
+      padding-bottom: 0;
+    }
   }
 }
 
@@ -83,26 +126,6 @@ Login well
   }
 }
 
-// If form white is activated
-.login-well.form-light {
-  background-color: $form-background-color;
-  // border: 1px solid #ddd;
-  // box-shadow: 0 2px 0 rgba(175, 175, 175, 0.12);
-
-  box-shadow: 0 9px 30px 0 rgba(35, 39, 42, 0.1);
-}
-
-.login-well.form-light.login-well-full {
-  background-color: $form-background-color;
-  border: 1px solid #ddd;
-  box-shadow: 0 2px 0 rgba(175, 175, 175, 0.12);
-}
-
-// If form transparent is activated
-.login-well.form-transparent {
-  background-color: transparent;
-}
-
 // Type inside login well
 .login-well h2,
 .login-well h3,
@@ -112,95 +135,26 @@ Login well
 }
 
 .login-well h1 {
-  font-size: 1.5rem;
+  font-size: calc(var(--type-base-size) * 1.5);
   word-wrap: break-word;
 
   @media #{$breakpoint-lg} {
-    font-size: 1.5rem;
+    font-size: calc(var(--type-base-size) * 1.75);
   }
-}
-
-// Login symbol
-.login-symbol {
-  margin-top: 2rem;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-content: center;
-  text-align: center;
-}
-
-.login-symbol-circle {
-  font-size: 2.5rem;
-  text-align: center;
-  width: 90px;
-  height: 90px;
-  display: flex;
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
-  align-content: center;
-  z-index: 2;
-  position: relative;
-
-  @media #{$breakpoint-sm} {
-    width: 110px;
-    height: 110px;
-  }
-}
-
-.login-well-full {
-  .login-symbol:before,
-  .login-symbol:after {
-    @media #{$breakpoint-md} {
-      width: 42%;
-    }
-  }
-}
-
-.login-symbol:before {
-  left: 1rem;
-}
-
-.login-symbol:after {
-  right: 1rem;
-}
-
-// Powered by Curity
-.login-powered-by {
-  display: flex;
-  justify-content: center;
-  align-content: center;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  flex-direction: column;
-  text-align: center;
-  opacity: 0.25;
-}
-
-.login-powered-by small {
-  font-size: 0.65rem;
-  text-transform: uppercase;
-}
-
-.login-powered-by-logo {
-  filter: grayscale(100%);
-  background-image: url("#{$imagePath}curity-logo.svg");
-  background-size: 70px 20px;
-  background-repeat: no-repeat;
-  width: 70px;
-  height: 20px;
-  display: block;
-  margin: 0 auto;
 }
 
 // App Store Badges
 .appstorebadges {
   display: flex;
-  // justify-content: center;
   align-items: center;
 }
 
 .appstorebadges img {
   max-width: 150px;
+}
+
+img[alt*="App Store"],
+img[alt*="Google Play"] {
+  max-width: 150px;
+  margin: 0 auto;
 }

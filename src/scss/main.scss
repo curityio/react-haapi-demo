@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Curity AB. All rights reserved.
+ * Copyright (C) 2021 Curity AB. All rights reserved.
  *
  * The contents of this file are the property of Curity AB.
  * You may not copy or use this file, in either source code
@@ -11,9 +11,22 @@
 
 @charset "utf-8";
 
+// Sets the path that is used when including self hosted web fonts
 $fontPath: "/../public/fonts/";
 
-@import "basscss/basscss";
-
+// Roboto font
 @import "roboto-fontface/css/roboto-fontface";
 
+// Ionicons
+// https://ionic.io/ionicons/v2
+@import "ionicons/css/ionicons";
+
+// Breakpoints. Using mobile first media querys using min-width.
+$breakpoint-sm: "(min-width: 40em)" !default;
+$breakpoint-md: "(min-width: 52em)" !default;
+$breakpoint-lg: "(min-width: 64em)" !default;
+$breakpoint-xlg: "(min-width: 74em)" !default;
+
+// Curity components.
+// Must be imported.
+@import "curity-application";

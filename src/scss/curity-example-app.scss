@@ -1,57 +1,9 @@
-$primary: #626c87;
 
 .example-app-wrapper {
   margin-top: 52px;
+  margin-right: 600px;
 }
 
-.example-app-sidebar {
-  max-width: 300px;
-  position: fixed;
-  background-color: rgb(240, 240, 240);
-  padding: 0;
-  margin: 0;
-  width: 100%;
-  height: 100%;
-  min-height: 100vh;
-  overflow-y: auto;
-}
-
-.example-app-sidebar a {
-  color: initial;
-  display: block;
-  padding: 0.75rem 2rem;
-  &:hover {
-    background-color: white;
-    color: initial;
-  }
-  &.active {
-    background-color: white;
-    color: initial;
-  }
-
-  &:hover,
-  &:focus {
-    text-decoration: none;
-  }
-}
-
-.example-app-sidebar h4 {
-  font-family: system-ui;
-  font-size: 0.75rem;
-  margin-top: 2rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding: 0.75rem 2rem;
-}
-
-.example-app-main {
-  padding-left: 300px;
-  width: 100%;
-  height: 100%;
-  min-height: 100vh;
-  overflow-y: auto;
-}
 
 .example-app-settings {
   position: fixed;
@@ -61,21 +13,59 @@ $primary: #626c87;
   display: none;
   height: calc(100% - 52px);
   background-color: #282a36;
-  padding: 2rem;
+  padding: 2rem 3rem;
+  width: 600px;
+  overflow-y: auto;
   &.active {
     display: block;
   }
 }
 
+.example-app-settings h1,
+.example-app-settings h2,
+.example-app-settings p {
+  color: white;
+}
+
+.example-app-settings h1 {
+  font-size: 2rem;
+}
+
+
+.example-app-settings label {
+  color: white;
+}
+
+
 .example-app-settings pre {
-  background-color: transparent;
+  background-color: #15161d;
   border: none;
   color: #f8f8f2;
   border-radius: 4px;
   padding: 1rem;
-  font-family: "Roboto Mono", "SF Mono", Consolas, Menlo, Monaco, monospace;
+  font-family: Roboto-Mono,Consolas,Monaco,Andale Mono,Ubuntu Mono,monospace;
   font-size: 0.85rem;
   line-height: 1.5;
+}
+
+.example-app-settings pre .json-mark {
+  color: white;
+}
+
+.example-app-settings pre .json-key {
+  color: #ff79c6;
+}
+
+.example-app-settings pre .json-number {
+  color: #e7ca45;
+}
+
+.example-app-settings pre .json-link {
+  color: white;
+}
+
+.example-app-settings pre .json-string {
+  color: #50fa7b;
 }
 
 .example-app-template-scroller {

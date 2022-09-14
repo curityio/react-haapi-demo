@@ -9,160 +9,174 @@
  * For further information, please contact Curity AB.
  */
 
-/*-------------------------------------------------------------------
+/* -------------------------------------------------------------------
 Alerts
--------------------------------------------------------------------*/
-.alert-wrapper {
-	padding-top: 1rem;
-	padding-bottom: 1rem;
-	padding-left: 1rem;
-	padding-right: 1rem;
+------------------------------------------------------------------- */
 
-	@media #{$breakpoint-sm} {
-		padding-left: 2.5rem;
-		padding-right: 2.5rem;
-	}
+.alert-wrapper {
+  padding-bottom: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 1rem;
+
+  @media #{$breakpoint-sm} {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
 }
 
 .alert {
-	margin-bottom: 1rem;
-	border-radius: 2px;
-	color: $grey;
-	font-size: .8rem;
-	border: 1px solid #ccc;
-	position: relative;
-	padding: 1rem 1rem 1rem 60px;
+  border-width: var(--alert-border-width);
+  border-style: var(--alert-border-style);
+  border-color: var(--alert-border-color);
+  border-radius: 2px;
+  color: var(--color-text);
+  font-size: 0.8rem;
+  margin-bottom: 1rem;
+  padding: 1rem 1rem 1rem 60px;
+  position: relative;
+  border-radius: var(--alert-border-radius);
+  border-width: var(--alert-border-width);
+  border-style: var(--alert-border-style);
+  border-color: var(--alert-border-color);
+  overflow: hidden;
 }
 
-.alert:before {
-	width: 30px;
-	height: calc(100%);
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-family: 'Ionicons';
-	font-size: 1.5rem;
-	color: white;
-	position: absolute;
-	padding: 1.5rem;
-	line-height: 0;
-	left: 0;
-	top: 0;
+.alert::before {
+  align-items: center;
+  color: white;
+  display: flex;
+  font-family: Ionicons;
+  font-size: 1.5rem;
+  height: calc(100%);
+  justify-content: center;
+  left: 0;
+  line-height: 0;
+  padding: 1.5rem;
+  position: absolute;
+  top: 0;
+  width: 30px;
 }
 
 .alert-warning {
-	color: darken($call-to-action-warning, 0%);
+  color: var(--color-warning);
+  border-color: var(--color-warning);
 
-	&:before {
-		background-color: $call-to-action-warning;
-		content: '\f3bc';
-	}
+  &::before {
+    background-color: var(--color-warning);
+    content: "\f3bc";
+  }
 }
 
 .alert-danger {
-	color: darken($call-to-action-danger, 10%);
+  color: var(--color-danger);
+  border-color: var(--color-danger);
 
-	&:before {
-		background-color: $call-to-action-danger;
-		content: '\f3bc';
-	}
+  &::before {
+    background-color: var(--color-danger);
+    content: "\f3bc";
+  }
 }
 
 .alert-success {
-	color: darken($call-to-action-success, 10%);
+  color: var(--color-success);
+  border-color: var(--color-success);
 
-	&:before {
-		background-color: $call-to-action-success;
-		content: '\f120';
-	}
+  &::before {
+    background-color: var(--color-success);
+    content: "\f120";
+  }
 }
 
 .alert-info {
-	color: darken($call-to-action-info, 25%);
+  color: var(--color-info);
+  border-color: var(--color-info);
 
-	&:before {
-		background-color: darken($call-to-action-info, 30%);
-		content: '\f149';
-	}
+  &::before {
+    background-color: var(--color-info);
+    content: "\f149";
+  }
 }
 
 // Dark skin
+
 .body-dark .form-transparent .alert {
-	color: white;
+  color: white;
 
-	&.alert-info {
-		border: 1px solid darken($call-to-action-info, 30%);
-	}
+  &.alert-info {
+    border: 1px solid var(--color-info);
+  }
 
-	&.alert-success {
-		border: 1px solid $call-to-action-success;
-	}
+  &.alert-success {
+    border: 1px solid var(--color-success);
+  }
 
-	&.alert-danger {
-		border: 1px solid $call-to-action-danger;
-	}
+  &.alert-danger {
+    border: 1px solid var(--color-danger);
+  }
 
-	&.alert-warning {
-		border: 1px solid $call-to-action-warning;
-	}
+  &.alert-warning {
+    border: 1px solid var(--color-warning);
+  }
 }
 
 // Error labels/text colors
+
 .is-error.is-error-danger {
-	color: $call-to-action-danger;
+  color: var(--color-danger);
 }
 
 .field-light.is-error.is-error-danger {
-	border: 1px solid $call-to-action-danger;
+  border: 1px solid var(--color-danger);
 }
 
 .is-error.is-error-warning {
-	color: darken($call-to-action-warning, 50%);
+  color: var(--color-warning);
 }
 
 .field-light.is-error.is-error-warning {
-	border: 1px solid darken($call-to-action-warning, 40%);
+  border: 1px solid var(--color-warning);
 }
 
 .is-error.is-error-success {
-	color: $call-to-action-success;
+  color: var(--color-success);
 }
 
 .field-light.is-error.is-error-success {
-	border: 1px solid $call-to-action-success;
+  border: 1px solid var(--color-success);
 }
 
 .is-error.is-error-info {
-	color: darken($call-to-action-info, 30%);
+  color: var(--color-info);
 }
 
 .field-light.is-error.is-error-info {
-	border: 1px solid darken($call-to-action-info, 30%);
+  border: 1px solid var(--color-info);
 }
 
-/*-------------------------------------------------------------------
+/* -------------------------------------------------------------------
 Badges use with the <sup></sup>
--------------------------------------------------------------------*/
+------------------------------------------------------------------- */
 
 .badge {
-	padding: 3px 6px;
-	color: white;
+  color: white;
+  padding: 3px 6px;
 }
 
 .badge-warning {
-	background-color: $call-to-action-warning;
+  background-color: var(--color-warning);
 }
 
 .badge-danger {
-	background-color: $call-to-action-danger;
+  background-color: var(--color-danger);
 }
 
 .badge-success {
-	background-color: $call-to-action-success;
+  background-color: var(--color-success);
 }
 
 p .badge {
-	top: 0;
-	margin-left: 4px;
-	margin-right: 4px;
+  margin-left: 4px;
+  margin-right: 4px;
+  top: 0;
 }

@@ -1,322 +1,129 @@
 .enter-usercode-wrapper {
-	position: relative;
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	flex-wrap: wrap;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 input[type="text"].field-enter-usercode {
-	width: 40px;
-	height: 50px;
-	border: 1px solid #626c87;
-	line-height: 50px;
-	font-size: 1rem;
-	text-align: center;
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	touch-action: manipulation;
-	background-color: white;
-	transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-	background-clip: padding-box;
+  width: 40px;
+  height: 50px;
+  border: 1px solid #626c87;
+  line-height: 50px;
+  font-size: 1rem;
+  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: manipulation;
+  background-color: white;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  background-clip: padding-box;
 }
 
 @media #{$breakpoint-sm} {
-	input[type="text"].field-enter-usercode {
-		width: 40px;
-		height: 50px;
-		font-size: 1.25rem;
-	}
+  input[type="text"].field-enter-usercode {
+    width: 40px;
+    height: 50px;
+    font-size: 1.25rem;
+  }
 }
 
 input[type="text"].field-enter-usercode-success {
-	border: 1px solid #57C75C;
+  border: 1px solid var(--color-success);
 }
 
 input[type="text"].field-enter-usercode-error {
-	border: 1px solid red;
-	box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.25);
+  border: 1px solid red;
+  box-shadow: 0 0 0 0.2rem var(--color-danger);
 }
 
 input[type="text"].field-enter-usercode-success:focus {
-	background-color: white;
-	color: inherit;
+  background-color: white;
+  color: inherit;
 }
 
 .field-enter-usercode-separator {
-	border: none;
-	pointer-events: none;
-	user-select: none;
-	height: 100%;
-	position: relative;
-	width: 100%;
-	display: block;
-	margin-top: 1rem;
-	margin-bottom: 1rem;
+  border: none;
+  pointer-events: none;
+  user-select: none;
+  height: 100%;
+  position: relative;
+  width: 100%;
+  display: block;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 
-	&:after {
-		display: block;
-		width: 16px;
-		margin: 0 auto;
+  &::after {
+    display: block;
+    width: 16px;
+    margin: 0 auto;
 
-		@media #{$breakpoint-sm} {
-			width: 80%;
-		}
+    @media #{$breakpoint-sm} {
+      width: 80%;
+    }
 
-		content: '';
-		height: 2px;
-		background-color: #333;
-	}
+    content: "";
+    height: 2px;
+    background-color: #333;
+  }
 
-	margin-right: .5rem;
+  margin-right: 0.5rem;
 
-	@media #{$breakpoint-sm} {
-		width: 20px;
-		display: inline-block;
-	}
+  @media #{$breakpoint-sm} {
+    width: 20px;
+    display: inline-block;
+  }
 }
 
 input[type="text"].field-enter-usercode:focus,
 input[type="text"].field-enter-usercode:focus {
-	background-color: #fff;
-	border-color: #626c87;
-	outline: 0;
-	box-shadow: 0 0 0 0.2rem rgba(98, 108, 135, 0.25);
+  background-color: #fff;
+  border-color: #626c87;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgb(98 108 135 / 25%);
 }
 
 .field-enter-usercode:not(last-child) {
-	margin-right: .5rem;
+  margin-right: 0.5rem;
 }
 
 input[type="submit"][disabled] {
-	cursor: default;
-	pointer-events: none;
-	opacity: .5;
+  cursor: default;
+  pointer-events: none;
+  opacity: 0.5;
 }
 
 .confirm-device {
-	background-color: #f6f6f6;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	border: 1px solid #ccc;
-	max-width: 700px;
-	margin: 0 auto;
+  background-color: #f6f6f6;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #ccc;
+  max-width: 700px;
+  margin: 0 auto;
 }
 
 .confirm-device-image {
-	flex: 1 1 auto;
-	display: block;
-	max-width: 300px;
+  flex: 1 1 auto;
+  display: block;
+  max-width: 300px;
 }
 
 .confirm-device-image img {
-	display: block;
-	object-fit: fill;
+  display: block;
+  object-fit: fill;
 }
 
 .confirm-device-text {
-	flex: 1 0 auto;
-	font-size: 1.25rem;
-	padding: 1rem;
+  flex: 1 0 auto;
+  font-size: 1.25rem;
+  padding: 1rem;
 }
 
 @media (min-width: 40em) {
-	.confirm-device-text {
-		font-size: 2rem;
-	}
-}
-
-// Done symbol
-.check-mark-icon {
-    width: 80px;
-    height: 80px;
-    transform: scale(0.7);
-    @media #{$breakpoint-md} {
-        transform: scale(1);
-    }
-
-    transform: scale(0.75);
-    border: 4px solid gray;
-    border-radius: 40px;
-    border-radius: 50%;
-
-    padding: 0;
-    position: relative;
-    box-sizing: content-box;
-    border-color: $call-to-action-success;
-}
-
-.check-mark-icon::before,
-.check-mark-icon::after {
-    content: '';
-    border-radius: 40px;
-    border-radius: 50%;
-    position: absolute;
-    width: 60px;
-    height: 120px;
-    transform: rotate(45deg);
-}
-
-.check-mark-icon::before {
-    border-radius: 120px 0 0 120px;
-    top: -7px;
-    left: -33px;
-    transform: rotate(-45deg);
-    transform-origin: 60px 60px;
-}
-
-.check-mark-icon::after {
-    border-radius: 0 120px 120px 0;
-    top: -11px;
-    left: 30px;
-    transform: rotate(-45deg);
-    transform-origin: 0px 60px;
-}
-
-.check-mark-icon .check-mark-icon-placeholder {
-    width: 80px;
-    height: 80px;
-    border: 4px solid rgba(76, 175, 80, 0.5);
-    border-radius: 40px;
-    border-radius: 50%;
-    box-sizing: content-box;
-    position: absolute;
-    left: -4px;
-    top: -4px;
-    z-index: 2;
-}
-
-.check-mark-icon .check-mark-icon-fix {
-    width: 5px;
-    height: 90px;
-    position: absolute;
-    left: 28px;
-    top: 8px;
-    z-index: 1;
-    transform: rotate(-45deg);
-}
-
-.check-mark-icon.animate::after {
-    animation: rotatePlaceholder 4.25s ease-in;
-}
-
-.check-mark-icon {
-    border-color: transparent\9;
-}
-
-.check-mark-icon .check-mark-icon-line.check-mark-icon-tip {
-    -ms-transform: rotate(45deg) \9;
-}
-
-.check-mark-icon .check-mark-icon-line.check-mark-icon-long {
-    -ms-transform: rotate(-45deg) \9;
-}
-
-.successtip {
-    animation: successtip 0.75s;
-}
-
-.successlong {
-    animation: successlong 0.75s;
-}
-
-@keyframes successtip {
-    0% {
-        width: 0;
-        left: 1px;
-        top: 19px;
-    }
-
-    54% {
-        width: 0;
-        left: 1px;
-        top: 19px;
-    }
-
-    70% {
-        width: 50px;
-        left: -8px;
-        top: 37px;
-    }
-
-    84% {
-        width: 17px;
-        left: 21px;
-        top: 48px;
-    }
-
-    100% {
-        width: 25px;
-        left: 14px;
-        top: 45px;
-    }
-}
-
-@keyframes successlong {
-    0% {
-        width: 0;
-        right: 46px;
-        top: 54px;
-    }
-
-    65% {
-        width: 0;
-        right: 46px;
-        top: 54px;
-    }
-
-    84% {
-        width: 55px;
-        right: 0px;
-        top: 35px;
-    }
-
-    100% {
-        width: 47px;
-        right: 8px;
-        top: 38px;
-    }
-}
-
-.check-mark-icon .check-mark-icon-line {
-    height: 5px;
-    background-color: #4CAF50;
-    display: block;
-    border-radius: 2px;
-    position: absolute;
-    z-index: 2;
-}
-
-.check-mark-icon .check-mark-icon-line.check-mark-icon-tip {
-    width: 25px;
-    left: 14px;
-    top: 46px;
-    transform: rotate(45deg);
-}
-
-.check-mark-icon .check-mark-icon-line.check-mark-icon-long {
-    width: 47px;
-    right: 8px;
-    top: 38px;
-    transform: rotate(-45deg);
-}
-
-@keyframes rotatePlaceholder {
-    0% {
-        transform: rotate(-45deg);
-    }
-
-    5% {
-        transform: rotate(-45deg);
-    }
-
-    12% {
-        transform: rotate(-405deg);
-    }
-
-    100% {
-        transform: rotate(-405deg);
-    }
+  .confirm-device-text {
+    font-size: 2rem;
+  }
 }

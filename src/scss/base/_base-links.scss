@@ -10,22 +10,30 @@
  */
 
 /* Links */
+
 a {
-    color: $link-color;
-    text-decoration:none;
+  color: var(--color-link);
+  text-decoration: none;
+  transition: color 200ms;
 }
 
 a:not(.button) {
-    &:hover,
-    &:focus {
-        text-decoration: underline;
-        color: $link-color-hover;
+  &:hover,
+  &:focus {
+    color: var(--color-link-hover);
+
+    body.body-dark .form-transparent & {
+      color: white;
     }
+  }
+
+  &:focus-visible {
+    border-color: var(--form-field-border-color-focus);
+    box-shadow: var(--form-field-box-shadow-focus);
+  }
 }
 
-/* Improves readability when focused and also mouse hovered in all browsers
-people.opera.com/patrickl/experiments/keyboard/test */
 a:hover,
 a:active {
-    outline: 0;
+  outline: 0;
 }
