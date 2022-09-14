@@ -531,3 +531,49 @@ button.button-link,
     background-color: white;
   }
 }
+
+a.button-loading,
+.button-loading {
+  position: relative;
+
+  span {
+    transition: opacity 100ms ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    white-space: nowrap;
+  }
+}
+
+a.button-loading-active,
+.button-loading-active {
+  span {
+    opacity: 0;
+  }
+}
+
+a.button-loading-active:after,
+.button-loading-active:after {
+  animation: loading 300ms infinite linear;
+  border: 0.15rem solid;
+  border-radius: 100%;
+  border-right-color: transparent;
+  border-top-color: transparent;
+  content: "";
+  display: block;
+  position: absolute;
+  height: 16px;
+  width: 16px;
+  left: calc(50% - 8px);
+  top: calc(50% - 8px);
+}
+
+@keyframes loading {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
