@@ -1,15 +1,23 @@
-import React from "react"
+import React from "react";
 
-// TODO: This is old. Will be updated soon
+/* UI Components */
+import { Layout, Page, Well, Logo } from "../";
 
-const Spinner = (props) => {
+const Spinner = () => {
   return (
-    <div className="waiting-spinner loader-inner ball-pulse">
-      <div className="waiting-spinner-child waiting-spinner-bounce1"></div>
-      <div className="waiting-spinner-child waiting-spinner-bounce2"></div>
-      <div className="waiting-spinner-child waiting-spinner-bounce3"></div>
-    </div>
-  )
-}
+    <Layout>
+      <Page>
+        <Well>
+          <Logo />
+          <div className="waiting-spinner loader-inner ball-pulse">
+            <div className="waiting-spinner-child waiting-spinner-bounce1"></div>
+            <div className="waiting-spinner-child waiting-spinner-bounce2"></div>
+            <div className="waiting-spinner-child waiting-spinner-bounce3"></div>
+          </div>
+        </Well>
+      </Page>
+    </Layout>
+  );
+};
 
-export default Spinner
+export default Spinner;
