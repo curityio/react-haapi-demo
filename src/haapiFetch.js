@@ -16,10 +16,17 @@
 
 import {createHaapiFetch} from "@curity/identityserver-haapi-web-driver";
 import config from "./config";
+import {haapiConnectionIssue} from "./messages";
 
-const haapiFetch = createHaapiFetch({
-    clientId: config.clientId,
-    tokenEndpoint: config.tokenEndpoint,
-})
+export default (() => {
+    const haapiFetch = createHaapiFetch({
+            clientId: config.clientId,
+            tokenEndpoint: config.tokenEndpoint,
+        })
 
-export default haapiFetch
+    haapiFetch.init().catch(e => {
+        console.error(haapiConnectionIssue)
+    })
+
+    return haapiFetch
+})()

@@ -21,7 +21,6 @@ import { theme } from "../../../settings.js"
 const Logo = () => {
   const { logo, skin } = theme
 
-  console.log(logo)
   return (
     <>
       {skin.loginFormBackground === "form-transparent" &&
