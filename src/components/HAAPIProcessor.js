@@ -31,7 +31,8 @@ import ShowRawResponse from "./ShowRawResponse";
 import RedirectStep from "./RedirectStep";
 import {prettyPrintJson} from "pretty-print-json";
 import {OidcClient} from "./OidcClient";
-import Settings from "./Settings";
+import {InitializationError} from "@curity/identityserver-haapi-web-driver";
+import {haapiConnectionIssue} from "../messages";
 
 export default function HAAPIProcessor(props) {
     const { haapiFetch, setTokens } = props
@@ -91,20 +92,16 @@ export default function HAAPIProcessor(props) {
         setIsLoading(true)
 
         const url = await oidcClient.getAuthorizationUrl()
-        const haapiResponse = await callHaapi(url)
-
-        setStep({ name: 'process-result', haapiResponse })
+        await callHaapi(url)
     }
 
     const submitForm = async (formState, url, method) => {
         setIsLoading(true)
-        const haapiResponse = await callHaapi(
+        await callHaapi(
             url,
             method,
             formState
         )
-
-        setStep({ name: 'process-result', haapiResponse})
     }
 
     const processHaapiResult = async () => {
@@ -158,23 +155,18 @@ export default function HAAPIProcessor(props) {
         }
     }, [ step ])
 
-    const clickLink = async (url) => {
-        const haapiResponse = await callHaapi(url)
-
-        setStep({ name: 'process-result', haapiResponse })
-    }
+    const clickLink = async (url) => await callHaapi(url)
 
     const processRedirect = async () => {
         const action = step.haapiResponse.actions[0]
 
         if (action.template === 'form' && action.kind === 'redirect') {
-            const haapiResponse = await callHaapi(
+            await callHaapi(
                 action.model.href,
                 action.model.method,
                 getRedirectBody(action.model.fields)
             )
 
-            setStep({ name: 'process-result', haapiResponse })
             return
         }
 
@@ -186,13 +178,12 @@ export default function HAAPIProcessor(props) {
         const continueAction = step.haapiResponse.actions[0].model.continueActions[0]
 
         if (continueAction && continueAction.template === 'form' && continueAction.kind === 'continue') {
-            const haapiResponse = await callHaapi(
+            await callHaapi(
                 continueAction.model.href,
                 continueAction.model.method,
                 getRedirectBody(continueAction.model.fields)
             )
 
-            setStep({ name: 'process-result', haapiResponse })
             return
         }
 
@@ -215,12 +206,11 @@ export default function HAAPIProcessor(props) {
             } else {
                 const continueAction = step.haapiResponse.actions[0].model.continueActions[0]
 
-                const haapiResponse = await callHaapi(
+                await callHaapi(
                     continueAction.model.href,
                     continueAction.model.method,
                     new URLSearchParams({ '_resume_nonce': event.data })
                 )
-                setStep({ name: 'process-result', haapiResponse })
             }
 
             setTimeout(() => popup.close(), 3000)
@@ -242,9 +232,15 @@ export default function HAAPIProcessor(props) {
             }
         }
 
-        const response = await haapiFetch(finalUrl, init)
-
-        return await response.json()
+        try {
+            const response = await haapiFetch(finalUrl, init)
+            const haapiResponse = await response.json()
+            setStep({ name: 'process-result', haapiResponse })
+        } catch (e) {
+            if (e instanceof InitializationError) {
+                setStep({ name: null, problem: { title: haapiConnectionIssue }})
+            }
+        }
     }
 
     const renderCancelForm = (action) => {
