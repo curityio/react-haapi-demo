@@ -246,10 +246,12 @@ export default function HAAPIProcessor(props) {
     const renderCancelForm = (action) => {
         const { model } = action
         const fields = new URLSearchParams(model.fields.map(field => [field.name, field.value]))
-        return <div className="form" key={action.title}>
-            <p>{model.title}</p>
-            <button onClick={() => submitForm(fields, model.href, model.method)}>{model.actionTitle}</button>
-        </div>
+        return <>
+                <div className="form" key={action.title}>
+                    <p>{model.title}</p>
+                    <button className="mt2 button button-primary button-fullwidth" onClick={() => submitForm(fields, model.href, model.method)}>{model.actionTitle}</button>
+                </div>
+        </>
     }
 
     const renderForm = (action) => {
@@ -293,14 +295,18 @@ export default function HAAPIProcessor(props) {
             break
         case 'external-browser-launch':
             const remainingActions = step.haapiResponse.actions.slice(1)
-            stepComponent = <>
-                <p>{step.haapiResponse.actions[0].title}</p>
-                {remainingActions && remainingActions.map(action => renderAction(action))}
-            </>
+            stepComponent = <Layout>
+                <Page>
+                        <Well>
+                        <Logo />
+                        <p>{step.haapiResponse.actions[0].title}</p>
+                        {remainingActions && remainingActions.map(action => renderAction(action))}
+                    </Well>
+                </Page>
+            </Layout>
             break
         case 'unknown-step':
-            stepComponent =
-            <Layout>
+            stepComponent = <Layout>
                 <Page>
                     <Well>
                         <Logo />
