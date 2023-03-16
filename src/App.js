@@ -18,7 +18,7 @@
 import "./scss/main.scss"
 import "./scss/curity-theme.scss"
 import "./scss/curity-example-app.scss"
-import '../node_modules/pretty-print-json/dist/pretty-print-json.css'
+import '../node_modules/pretty-print-json/dist/css/pretty-print-json.css'
 import { Header, Layout, Main } from "./components/example"
 
 import {useState} from "react";
