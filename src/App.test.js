@@ -19,6 +19,6 @@ import App from './App';
 
 test('renders login button', () => {
   render(<App />);
-  const linkElement = screen.getByText(/Login/i);
+  const linkElement = screen.getByText(/Login/);
   expect(linkElement).toBeInTheDocument();
 });
