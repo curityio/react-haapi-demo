@@ -19,6 +19,7 @@ import StartAuthorization from "./StartAuthorization";
 
 /* UI Authenticators */
 import UsernamePassword from "../ui-kit/authenticators/UsernamePassword";
+import FormBased from "../ui-kit/authenticators/FormBased";
 
 /* UI Containers */
 import Selector from "../ui-kit/containers/Selector";
@@ -80,10 +81,17 @@ export default function HAAPIProcessor(props) {
                 />
             case 'authenticator/external-browser/launch':
                 setStep({ name: 'external-browser-launch', haapiResponse: step.haapiResponse })
-                return
+                return 
             default:
-                setStep({ name: 'unknown-step', haapiResponse: step.haapiResponse })
-                setMissingResponseType('Authentication Step')
+                return <FormBased
+                    haapiResponse={haapiResponse}
+                    submitForm={(formState, url, method) => submitForm(formState, url, method)}
+                    isLoading={isLoading}
+                    clickLink={(url) => clickLink(url)}
+                    inputProblem={step.inputProblem}
+                />
+                //setStep({ name: 'unknown-step', haapiResponse: step.haapiResponse })
+                //setMissingResponseType('Authentication Step')
         }
     }
 
@@ -121,6 +129,7 @@ export default function HAAPIProcessor(props) {
             case 'registration-step':
                 setStep({ name: 'registration-step', haapiResponse })
                 break
+            case 'https://curity.se/problems/generic-user-error':
             case 'https://curity.se/problems/incorrect-credentials':
                 setStep({ name: step.haapiResponse.type, haapiResponse: step.haapiResponse, problem: haapiResponse })
                 break

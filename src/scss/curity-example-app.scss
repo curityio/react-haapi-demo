@@ -37,7 +37,7 @@
 }
 
 
-.example-app-settings pre {
+.example-app-settings pre , .example-app-wrapper pre {
   background-color: #15161d;
   border: none;
   color: #f8f8f2;
@@ -48,22 +48,27 @@
   line-height: 1.5;
 }
 
+.example-app-wrapper pre .json-mark,
 .example-app-settings pre .json-mark {
   color: white;
 }
 
+.example-app-wrapper pre .json-key,
 .example-app-settings pre .json-key {
   color: #ff79c6;
 }
 
+.example-app-wrapper pre .json-number,
 .example-app-settings pre .json-number {
   color: #e7ca45;
 }
 
+.example-app-wrapper pre .json-link,
 .example-app-settings pre .json-link {
   color: white;
 }
 
+.example-app-wrapper pre .json-string,
 .example-app-settings pre .json-string {
   color: #50fa7b;
 }
